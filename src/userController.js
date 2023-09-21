@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const User = require('../models/User'); // Replace with your user model
+const User = require('../models/User'); // Replace with user model when it is created
 
 // Controller for user registration
 const registerUser = async (req, res) => {
