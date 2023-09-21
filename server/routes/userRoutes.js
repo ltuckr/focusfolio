@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken'); // For JWT authentication
-const User = require('../models/User'); // Import your User model
+const User = require('../models/User'); // Import User model
 
 // Route to register a new user
 router.post('/register', async (req, res) => {
