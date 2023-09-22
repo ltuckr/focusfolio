@@ -55,7 +55,7 @@ router.post('/purchase', withAuth, async (req, res) => {
     });
 
     // Save the purchase information to your database
-    // Here, you'd typically create a new purchase record
+    
 
     res.status(200).json({ message: 'Purchase successful', charge });
   } catch (err) {
