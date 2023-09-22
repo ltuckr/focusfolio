@@ -3,7 +3,7 @@ app.get('/', (req, res) => {
     // Fetch featured projects or other content from the database
     const featuredProjects = []; // Retrieve featured projects from the database
   
-    // Render the homepage template
+    // Render the homepage 
     res.render('home', {
       title: 'FocusFolio - Photography Platform',
       featuredProjects,
