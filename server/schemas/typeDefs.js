@@ -1,27 +1,75 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type Tech {
+  type User {
     _id: ID!
-    name: String!
+    username: String!
+    email: String!
+    password: String!
+    bio: String
+    created_at: String!
+    updated_at: String!
   }
 
-  type Matchup {
+  type Project {
     _id: ID!
-    tech1: String!
-    tech2: String!
-    tech1_votes: Int
-    tech2_votes: Int
+    title: String!
+    description: String!
+    images: [Image]!
+    user_id: ID!
+    created_at: String!
+    updated_at: String!
+  }
+
+  type Purchase {
+    _id: ID!
+    user_id: ID!
+    project_id: ID!
+    transactionAmount: Float!
+    transactionDate: String!
+  }
+
+  type Favorite {
+    _id: ID!
+    user_id: ID!
+    image_id: ID!
+    created_at: String!
+  }
+
+  type Comment {
+    _id: ID!
+    user_id: ID!
+    image_id: ID!
+    text: String!
+    created_at: String!
+  }
+
+  type Image {
+    _id: ID!
+    imageUrl: String!
+    description: String!
   }
 
   type Query {
-    tech: [Tech]
-    matchups(_id: String): [Matchup]
+    users: [User]
+    projects: [Project]
+    purchases: [Purchase]
+    favorites: [Favorite]
+    comments: [Comment]
+    images: [Image]
   }
 
   type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
+    createUser(username: String!, email: String!, password: String!): User
+    createProject(title: String!, description: String!, images: [ImageInput]!): Project
+    createPurchase(user_id: ID!, project_id: ID!, transactionAmount: Float!): Purchase
+    createFavorite(user_id: ID!, image_id: ID!): Favorite
+    createComment(user_id: ID!, image_id: ID!, text: String!): Comment
+  }
+
+  input ImageInput {
+    imageUrl: String!
+    description: String!
   }
 `;
 
