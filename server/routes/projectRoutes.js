@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Project = require('../models/Project'); // Import your Project model
+const authMiddleware = require('../middleware/authMiddleware'); // Import authentication middleware
 
 // Route to create a new project
-router.post('/create', async (req, res) => {
+router.post('/create', authMiddleware, async (req, res) => {
   try {
     // Extract project data from the request body
     const { title, description, images } = req.body;
@@ -13,7 +14,7 @@ router.post('/create', async (req, res) => {
       title,
       description,
       images,
-      photographer_id: req.userId, // Assuming you store user ID in the JWT payload
+      clientId: req.userId, // Assuming client ID in the JWT payload
     });
 
     // Save the project to the database
