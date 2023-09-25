@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken'); // For JWT authentication
 const User = require('../models/User'); // Import User model
 
+// Load the JWT secret key from an environment variable
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'your-secret-key';
+
 // Route to register a new user
 router.post('/register', async (req, res) => {
   try {
@@ -30,7 +33,7 @@ router.post('/register', async (req, res) => {
     await newUser.save();
 
     // Generate a JWT token for authentication
-    const token = jwt.sign({ userId: newUser._id }, 'your-secret-key', {
+    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET_KEY, {
       expiresIn: '1h',
     });
 
@@ -63,7 +66,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate a JWT token for authentication
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key', {
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET_KEY, {
       expiresIn: '1h',
     });
 
