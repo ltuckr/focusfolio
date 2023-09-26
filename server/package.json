@@ -9,7 +9,7 @@
     "watch": "nodemon server.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "apollo-server-express": "^3.6.2",
     "express": "^4.17.2",
