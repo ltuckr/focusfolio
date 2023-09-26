@@ -1,0 +1,32 @@
+[
+    {
+        "user_id": "GoHeels23",
+        "message": "Love the styling, this really brings my family together. ",
+        "isFavorite": true,
+        "isPurchased": true
+    },
+    {
+        "user_id": "dogmom1972",
+        "message": "Cannot thank you enough for these amazing photos!!!!",
+        "isFavorite": true,
+        "isPurchased": false
+    },
+    {
+        "user_id": "cookingqueen12",
+        "message": "I love the editing, but could you use a different photo thats so not my angle.",
+        "isFavorite": false,
+        "isPurchased": false
+    },
+    {
+        "user_id": "FantasyFootballisLife777",
+        "message": "UGH, my wife would kill me if I don't buy this. LOOKS GREAT!",
+        "isFavorite": true,
+        "isPurchased": true
+    },
+    {
+        "user_id": "PHOTOBOMBER34",
+        "message": "Love the setting, but I think I look at some of the others.",
+        "isFavorite": false,
+        "isPurchased": false
+    }
+]
