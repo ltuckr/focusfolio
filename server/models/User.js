@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
   bio: { type: String },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
+  purchases: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Purchase' }],
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Favorite' }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 const User = mongoose.model('User', userSchema);
