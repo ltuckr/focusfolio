@@ -1,52 +1,65 @@
+// UserController.js
+
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Get a user by ID
-exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
-};
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'your-secret-key';
 
-// Create a new user
-exports.createUser = async (req, res) => {
+// Register a new user
+exports.registerUser = async (req, res) => {
   try {
-    const newUser = new User(req.body);
+    const { username, email, password } = req.body;
+    const existingUser = await User.findOne({ email });
+    
+    if (existingUser) {
+      return res.status(409).json({ message: 'User already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
     await newUser.save();
-    res.status(201).json(newUser);
+    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET_KEY, {
+      expiresIn: '1h',
+    });
+
+    res.status(201).json({ message: 'User registered', token });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Update a user by ID
-exports.updateUserById = async (req, res) => {
+// Log in a user
+exports.loginUser = async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Authentication failed' });
     }
-    res.status(200).json(updatedUser);
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Authentication failed' });
+    }
+
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET_KEY, {
+      expiresIn: '1h',
+    });
+
+    res.status(200).json({ message: 'Authentication successful', token });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Delete a user by ID
-exports.deleteUserById = async (req, res) => {
-  try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
-    if (!deletedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.status(204).send(); // No content in the response
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
-};
-
+// Add more user controllers as needed
