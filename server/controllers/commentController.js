@@ -1,18 +1,23 @@
+// CommentController.js
+
 const Comment = require('../models/Comment');
 
-// Add a comment
-exports.addComment = async (req, res) => {
-  // Implement similar logic as in the user controller
+// Allow users to comment on an image
+exports.commentOnImage = async (req, res) => {
+  try {
+    const { image_id, text } = req.body;
+
+    // Create a new comment record for the user
+    const newComment = await Comment.create({
+      user_id: req.userId, // store user ID in the JWT payload
+      image_id,
+      text,
+    });
+
+    res.status(200).json(newComment);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 };
 
-// Update a comment by ID
-exports.updateCommentById = async (req, res) => {
-  // Implement similar logic as in the user controller
-};
-
-// Delete a comment by ID
-exports.deleteCommentById = async (req, res) => {
-  // Implement similar logic as in the user controller
-};
-
-// Other controller methods for comment-related operations
+// Add more comment controllers as needed

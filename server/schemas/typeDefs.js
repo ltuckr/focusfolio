@@ -5,72 +5,57 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    password: String!
-    bio: String
-    created_at: String!
-    updated_at: String!
+    purchases: [Purchase]!
+    favorites: [Favorite]!
+    comments: [Comment]!  # Include the comments field here
   }
 
   type Project {
     _id: ID!
     title: String!
     description: String!
-    images: [Image]!
-    user_id: ID!
-    created_at: String!
-    updated_at: String!
+    images: [String]!
+    user: User!
   }
 
   type Purchase {
     _id: ID!
-    user_id: ID!
-    project_id: ID!
-    transactionAmount: Float!
-    transactionDate: String!
+    project: Project!
+    user: User!
   }
 
   type Favorite {
     _id: ID!
-    user_id: ID!
-    image_id: ID!
-    created_at: String!
+    project: Project!
+    user: User!
   }
 
   type Comment {
     _id: ID!
-    user_id: ID!
-    image_id: ID!
     text: String!
-    created_at: String!
-  }
-
-  type Image {
-    _id: ID!
-    imageUrl: String!
-    description: String!
+    project: Project!
+    user: User!
   }
 
   type Query {
-    users: [User]
-    projects: [Project]
-    purchases: [Purchase]
-    favorites: [Favorite]
-    comments: [Comment]
-    images: [Image]
+    projects: [Project]!
+    project(_id: ID!): Project
+    users: [User]!
+    user(_id: ID!): User
+    purchases: [Purchase]!
+    favorites: [Favorite]!
+    comments: [Comment]!  # Include the comments query here
   }
 
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
-    createProject(title: String!, description: String!, images: [ImageInput]!): Project
-    createPurchase(user_id: ID!, project_id: ID!, transactionAmount: Float!): Purchase
-    createFavorite(user_id: ID!, image_id: ID!): Favorite
-    createComment(user_id: ID!, image_id: ID!, text: String!): Comment
+    createProject(title: String!, description: String!, images: [String]!): Project  # Include the createProject mutation here
+    createPurchase(projectId: ID!): Purchase
+    createFavorite(projectId: ID!): Favorite
+    createComment(projectId: ID!, text: String!): Comment
   }
-
-  input ImageInput {
-    imageUrl: String!
-    description: String!
-  }
+  
+  
 `;
 
 module.exports = typeDefs;

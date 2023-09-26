@@ -1,13 +1,22 @@
+// FavoriteController.js
+
 const Favorite = require('../models/Favorite');
 
-// Add a favorite
-exports.addFavorite = async (req, res) => {
-  // Implement similar logic as in the user controller
+// Allow users to favorite an image
+exports.favoriteImage = async (req, res) => {
+  try {
+    const { image_id } = req.body;
+
+    // Create a new favorite record for the user
+    const newFavorite = await Favorite.create({
+      user_id: req.userId, //store user ID in the JWT payload
+      image_id,
+    });
+
+    res.status(200).json(newFavorite);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 };
 
-// Remove a favorite
-exports.removeFavorite = async (req, res) => {
-  // Implement similar logic as in the user controller
-};
-
-// Other controller methods for favorite-related operations
+// Add more favorite controllers as needed
