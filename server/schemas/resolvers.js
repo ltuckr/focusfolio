@@ -1,4 +1,4 @@
-const { User, Project, Purchase, Favorite, Comment } = require('../models');
+const { User, Project, Purchase, Favorite, Comment, ClientGallery } = require('../models');
 
 const resolvers = {
   Query: {
@@ -17,10 +17,10 @@ const resolvers = {
     comments: async () => {
       return Comment.find({});
     },
-    clientGalleryImages: async (_, args) =>{
+    clientGalleryImages: async (_, args) => {
       try {
-        //  retrieve client gallery images for a specific client user
-        const { clientUserId } = args; //arguments passed in from the client
+        // Retrieve client gallery images for a specific client user
+        const { clientUserId } = args; // Arguments passed in from the client
 
         // Find the client gallery for the specified client user
         const clientGallery = await ClientGallery.findOne({ clientUserId }).populate('images');
@@ -33,7 +33,7 @@ const resolvers = {
       } catch (error) {
         throw new Error(`Error fetching client gallery images: ${error.message}`);
       }
-    }
+    },
   },
   Mutation: {
     createUser: async (parent, args) => {
