@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import styles from "./imageGallery.module.css";
-import image3 from "../assets/images/contactImage.jpg";
-import image4 from "../assets/images/mainPageImg.jpg";
-import image5 from "../assets/images/portrait1.jpg";
-import image6 from "../assets/images/portrait2.jpg";
-import image7 from "../assets/images/portrait3.jpg";
-import image8 from "../assets/images/portrait4.jpg";
+import B1Image from "./images/B1.jpg";
+import B2Image from "./images/B2.jpg";
+import B3Image from "./images/B3.jpg";
+import B4Image from "./images/B4.jpg";
+import K1Image from "./images/K1.JPG";
+import K2Image from "./images/K2.JPG";
+import K3Image from "./images/K3.JPG";
+import NB1Image from "./images/NB1.JPG";
+import NB2Image from "./images/NB2.JPG";
+import NB3Image from "./images/NB3.JPG";
+import NB4Image from "./images/NB4.JPG";
+import NB5Image from "./images/NB5.JPG";
 
 // image data
-const images = [image3, image4, image5, image6, image7, image8];
+const images = [B1Image, B2Image, B3Image, B4Image, K1Image, K2Image, K3Image, NB1Image, NB2Image, NB3Image, NB4Image, NB5Image];
 
 export default function GalleryImgs() {
   const [selectedImage, setSelectedImage] = useState(null);
