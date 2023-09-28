@@ -1,5 +1,5 @@
 import styles from "./gallery.module.css";
-import GalleryImgs from "../components/imageGallery"
+import GalleryImgs from '../../components/ImageGallery/imageGallery.js'
 
 export default function Gallery(){
     return(
