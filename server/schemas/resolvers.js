@@ -17,6 +17,23 @@ const resolvers = {
     comments: async () => {
       return Comment.find({});
     },
+    clientGalleryImages: async (_, args) =>{
+      try {
+        //  retrieve client gallery images for a specific client user
+        const { clientUserId } = args; //arguments passed in from the client
+
+        // Find the client gallery for the specified client user
+        const clientGallery = await ClientGallery.findOne({ clientUserId }).populate('images');
+
+        if (!clientGallery) {
+          throw new Error('Client gallery not found');
+        }
+
+        return clientGallery.images;
+      } catch (error) {
+        throw new Error(`Error fetching client gallery images: ${error.message}`);
+      }
+    }
   },
   Mutation: {
     createUser: async (parent, args) => {
@@ -41,8 +58,5 @@ const resolvers = {
     },
   },
 };
-
-module.exports = resolvers;
-
 
 module.exports = resolvers;
