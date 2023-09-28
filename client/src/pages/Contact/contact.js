@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./contact.module.css";
-import img1 from "../images/contactImage.jpg"
+import img1 from "../../images/contactImage.jpg"
 
 
 export default function Contact() {
