@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./imageGallery.module.css";
-import { CREATE_FAVORITE } from "../../utils/queries";
+import { CREATE_FAVORITE } from "../../utils/mutations";
 
 // Image Imports
 import B1Image from "../../images/B1.jpg";
