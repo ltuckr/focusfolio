@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
-// import styles from "./login.module.css";
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '../utils/mutations';
+import Auth from '../utils/auth';
 import styles from "../Login/login.module.css";
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [login, { error }] = useMutation(LOGIN);
 
-  const handleLogin = () => {
-    console.log('Logging in with:', username, password);
+  const handleLogin = async () => {
+    try {
+      const { data } = await login({
+        variables: { email, password },
+      });
 
-    // Clear input fields
-    setUsername('');
-    setPassword('');
+      const token = data.login.token;
+      Auth.login(token);
+
+      // Redirect or perform other actions after successful login
+      // Example: history.push('/dashboard');
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -19,10 +30,10 @@ export default function Login() {
       <h2 className={styles.loginText}>Login</h2>
       <p className={styles.loginPar}>Please login to your account</p>
       <input className={styles.loginInput}
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <input className={styles.loginInput}
         type="password"
@@ -30,6 +41,9 @@ export default function Login() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      {error && (
+        <p className={styles.errorText}>The provided credentials are incorrect</p>
+      )}
       <button onClick={handleLogin} className={styles.loginBtn}>Login</button>
     </div>
   );
