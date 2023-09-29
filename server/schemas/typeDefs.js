@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    purchases: [Purchase]!
+    purchases: [Product]!
     favorites: [Image]!
     comments: [Comment]!
   }
@@ -26,10 +26,11 @@ const typeDefs = gql`
     imageUrl: String
   }
 
-  type Purchase {
+  type Product {
     _id: ID!
-    project: Project!
-    user: User!
+    name: String!  # Add the necessary fields for your product
+    price: Float!
+    description: String!
   }
 
   type Comment {
@@ -44,7 +45,7 @@ const typeDefs = gql`
     project(_id: ID!): Project
     users: [User]!
     user(_id: ID!): User
-    purchases: [Purchase]!
+    purchases: [Product]!
     comments: [Comment]!
     clientGalleryImages: [Project]!  # Add this query
   }
@@ -52,10 +53,11 @@ const typeDefs = gql`
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
     createProject(title: String!, description: String!, images: [String]!): Project
-    createPurchase(projectId: ID!): Purchase
+    createPurchase(projectId: ID!): Product  # Updated this line to return a Product
     createFavorite(userId: ID!, imageUrl: String!): User
     createComment(projectId: ID!, text: String!): Comment
   }
+  
 `;
 
 module.exports = typeDefs;

@@ -36,17 +36,7 @@ export const CREATE_PROJECT = gql`
   }
 `;
 
-export const CREATE_PURCHASE = gql`
-  mutation createPurchase($user_id: ID!, $project_id: ID!, $transactionAmount: Float!) {
-    createPurchase(user_id: $user_id, project_id: $project_id, transactionAmount: $transactionAmount) {
-      _id
-      user_id
-      project_id
-      transactionAmount
-      transactionDate
-    }
-  }
-`;
+
 
 export const CREATE_FAVORITE = gql`
 mutation CreateFavorite($userId: ID!, $imageUrl: String!) {

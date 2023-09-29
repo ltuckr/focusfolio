@@ -1,7 +1,6 @@
 const {
   User,
   Project,
-  Purchase,
   Image,
   Comment,
   ClientGallery,
@@ -16,9 +15,7 @@ const resolvers = {
     projects: async () => {
       return Project.find({});
     },
-    purchases: async () => {
-      return Purchase.find({});
-    },
+
     comments: async () => {
       return Comment.find({});
     },
@@ -44,10 +41,11 @@ const resolvers = {
       }
     },
 
+  
     // stripe 
-    product: async (parent, { _id}) => {
-      return await Project.findById(_id).populate('clientGallery');
-    },
+product: async (parent, { _id }) => {
+  return await Project.findById(_id).populate('images'); // Change 'clientGallery' to 'images'
+},
     user: async (parent, args, context) => {
       if (context.user) { 
         const user = await User.findById(context.user._id).populate({
@@ -107,10 +105,10 @@ const resolvers = {
       const project = await Project.create(args);
       return project;
     },
-    createPurchase: async (parent, args) => {
-      const purchase = await Purchase.create(args);
-      return purchase;
-    },
+    //createPurchase: async (parent, args) => {
+     // const purchase = await Purchase.create(args);
+     // return purchase;
+    //},
     createFavorite: async (parent, { userId, imageUrl }) => {
       console.log(userId, imageUrl);
       const user = await User.findById(userId);
