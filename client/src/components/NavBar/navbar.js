@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo/logo";
 import styles from './navbar.module.css';
 
 export default function NavBar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <>
-      <nav className={styles.navbar}>
-        <div className={styles.navTop}><Logo />
-        <ul className={styles.navTopRight}>
-        <li>
-            <NavLink to="/cart" className={styles.navTopNames}>Cart
-            </NavLink>
-          </li>
-        </ul>
-        </div >
-        <div className ={styles.navBottom}>
-        <ul className={styles.navTools}>
+    <nav className={styles.navbar}>
+      <div className={styles.navTop}>
+        <Logo />
+      </div>
+      <div className={styles.navBottom}>
+        <div className={styles.hamburgerMenu} onClick={toggleMenu}>
+          <div className={styles.bar}></div>
+          <div className={styles.bar}></div>
+          <div className={styles.bar}></div>
+        </div>
+        <ul className={`${styles.navTools} ${isMenuOpen ? styles.open : ''}`}>
           <li>
             <NavLink to="/" className={styles.navNames}>
               Home
@@ -32,10 +37,14 @@ export default function NavBar() {
               Contact
             </NavLink>
           </li>
-          
+          <li>
+            <NavLink to="/cart" className={styles.navNames}>
+              Cart
+            </NavLink>
+          </li>
         </ul>
-        <ul className={styles.navToolsRight}>
-        <li>
+        <ul className={`${styles.navToolsRight} ${isMenuOpen ? styles.open : ''}`}>
+          <li>
             <NavLink to="/login" className={styles.navNames}>
               Login
             </NavLink>
@@ -46,8 +55,7 @@ export default function NavBar() {
             </NavLink>
           </li>
         </ul>
-        </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 }
