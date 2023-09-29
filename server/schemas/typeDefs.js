@@ -5,8 +5,8 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    purchases: [Purchase]!
-    favorites: [Favorite]!
+    purchases: [Product]!
+    favorites: [Image]!
     comments: [Comment]!
   }
 
@@ -14,22 +14,22 @@ const typeDefs = gql`
     _id: ID!
     title: String!
     description: String!
-    images: [String]!
+    images: [Image]!
     user: User!
     galleryType: String  # Add this field (e.g., "general" or "client")
     tags: [String]  # Add tags or categories if needed
   }
 
-  type Purchase {
+  type Image {
     _id: ID!
-    project: Project!
-    user: User!
+    imageUrl: String
   }
 
-  type Favorite {
-    _id: ID!
-    project: Project!
-    user: User!
+  type Product {
+    _id: ID! 
+    name: String!
+    description: String!
+    price: Float!
   }
 
   type Comment {
@@ -44,8 +44,7 @@ const typeDefs = gql`
     project(_id: ID!): Project
     users: [User]!
     user(_id: ID!): User
-    purchases: [Purchase]!
-    favorites: [Favorite]!
+    purchases: [Product]!
     comments: [Comment]!
     clientGalleryImages: [Project]!  # Add this query
   }
@@ -53,8 +52,8 @@ const typeDefs = gql`
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
     createProject(title: String!, description: String!, images: [String]!): Project
-    createPurchase(projectId: ID!): Purchase
-    createFavorite(projectId: ID!): Favorite  # Add this mutation
+    createPurchase(projectId: ID!): Product  # Updated this line to return a Product
+    createFavorite(userId: ID!, imageUrl: String!): User
     createComment(projectId: ID!, text: String!): Comment
   }
 `;

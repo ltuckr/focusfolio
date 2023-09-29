@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   updated_at: { type: Date, default: Date.now },
   // Fields for user-specific data
   purchases: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Purchase' }],
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Favorite' }],
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
