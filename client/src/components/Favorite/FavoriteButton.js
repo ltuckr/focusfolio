@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as solidHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { CREATE_FAVORITE } from "../../utils/mutations";
 function FavoriteButton({ userId, imageUrl, isFavorited, onToggleFavorite }) {
     const [createFavorite] = useMutation(CREATE_FAVORITE);
@@ -30,9 +30,9 @@ function FavoriteButton({ userId, imageUrl, isFavorited, onToggleFavorite }) {
     return (
       <button onClick={handleFavorite}>
         {isFavorited ? (
-          <FontAwesomeIcon icon={solidHeart} color="red" />
+          <FontAwesomeIcon icon={faHeart} color="red" />
         ) : (
-          <FontAwesomeIcon icon={faHeartBroken} color="gray" />
+          <FontAwesomeIcon icon={faHeart} color="gray" />
         )}
       </button>
     );

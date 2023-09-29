@@ -34,43 +34,39 @@ const images = [
   NB5Image,
 ];
 
-export default function GalleryImgs() {
+
+const GalleryImgs = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isImagePurchased, setIsImagePurchased] = useState(false); // Track if the image is purchased
-  const [isImageFavorited, setIsImageFavorited] = useState(false); // Track if the image is favorited
-  const [commentText, setCommentText] = useState(""); // Store the comment text
+  const [isImagePurchased, setIsImagePurchased] = useState(false);
+  const [isImageFavorited, setIsImageFavorited] = useState(false);
+  const [commentText, setCommentText] = useState("");
 
   const openModal = (image) => {
     setSelectedImage(image);
-    setIsImagePurchased(false); // Reset the purchase status when the modal is opened
-    setIsImageFavorited(false); // Reset the favorite status when the modal is opened
-    setCommentText(""); // Reset the comment text when the modal is opened
+    setIsImagePurchased(false);
+    setIsImageFavorited(false);
+    setCommentText("");
   };
 
   const closeModal = () => {
     setSelectedImage(null);
   };
 
-  // Logic to create or remove a favorite
   const [createFavorite] = useMutation(CREATE_FAVORITE);
 
   const handleFavorite = async () => {
     try {
-      // Call the GraphQL mutation to create or remove a favorite
       await createFavorite({
         variables: {
           imageUrl: selectedImage,
         },
       });
 
-      // Update the isImageFavorited state accordingly
-      setIsImageFavorited(!isImageFavorited); // Toggle the favorite status
+      setIsImageFavorited(!isImageFavorited);
     } catch (error) {
       console.error("Error favoriting image:", error);
     }
   };
-
-  // ... (handlePurchase and handleComment functions if needed)
 
   return (
     <div className={styles.gallery}>
@@ -84,67 +80,63 @@ export default function GalleryImgs() {
           <FavoriteButton
             imageUrl={image}
             isFavorited={isImageFavorited}
-            onToggleFavorite={(newFavoriteStatus) =>
-              setIsImageFavorited(newFavoriteStatus)
-            }
+            onToggleFavorite={handleFavorite}
           />
         </div>
       ))}
       {selectedImage && (
         <Modal
           image={selectedImage}
-          onClose={closeModal}
-         // onPurchase={handlePurchase}
-          isPurchased={isImagePurchased}
-          onFavorite={handleFavorite}
+          images={images}
           isFavorited={isImageFavorited}
+          setIsImageFavorited={setIsImageFavorited}
+          onClose={closeModal}
+          onFavorite={handleFavorite}
           commentText={commentText}
-         // onComment={handleComment}
           onCommentTextChange={(e) => setCommentText(e.target.value)}
         />
       )}
     </div>
   );
-}
+};
+
+export default GalleryImgs;
 
 function Modal({
   image,
+  images,
+  isFavorited, // Receive isFavorited prop
+  setIsImageFavorited, // Receive setIsImageFavorited prop
   onClose,
-  onPurchase,
-  isPurchased,
   onFavorite,
-  isFavorited,
   commentText,
-  onComment,
   onCommentTextChange,
 }) {
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent}>
+        <img src={image} alt="Enlarged Image" />
         <span className={styles.close} onClick={onClose}>
           &times;
         </span>
-        <img src={image} alt="Modal" />
-
-        {/* Purchase Button */}
-        <button onClick={onPurchase} disabled={isPurchased}>
-          {isPurchased ? "Purchased" : "Purchase"}
-        </button>
-
-        {/* Favorite Button */}
-        <button onClick={onFavorite}>
-          {isFavorited ? "Unfavorite" : "Favorite"}
-        </button>
-
-        {/* Comment Input and Button */}
-        <input
-          type="text"
-          placeholder="Add a comment..."
+        <div className={styles.favoriteButton}>
+          <FavoriteButton
+            imageUrl={image}
+            isFavorited={isFavorited} // Use isFavorited prop here
+            onToggleFavorite={() => {
+              onFavorite();
+              setIsImageFavorited(!isFavorited); // Update isFavorited state
+            }}
+          />
+        </div>
+        {/* Add your comment input field here */}
+        <textarea
           value={commentText}
           onChange={onCommentTextChange}
+          placeholder="Add a comment..."
         />
-        <button onClick={onComment}>Add Comment</button>
       </div>
     </div>
   );
 }
+
