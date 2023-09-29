@@ -20,17 +20,16 @@ const typeDefs = gql`
     tags: [String]  # Add tags or categories if needed
   }
 
-
   type Image {
     _id: ID!
     imageUrl: String
   }
 
   type Product {
-    _id: ID!
-    name: String!  # Add the necessary fields for your product
-    price: Float!
+    _id: ID! 
+    name: String!
     description: String!
+    price: Float!
   }
 
   type Comment {
@@ -57,7 +56,6 @@ const typeDefs = gql`
     createFavorite(userId: ID!, imageUrl: String!): User
     createComment(projectId: ID!, text: String!): Comment
   }
-  
 `;
 
 module.exports = typeDefs;

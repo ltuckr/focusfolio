@@ -42,60 +42,63 @@ const resolvers = {
     },
 
   
-    // stripe 
-product: async (parent, { _id }) => {
-  return await Project.findById(_id).populate('images'); // Change 'clientGallery' to 'images'
+    
+ // stripe 
+ //product: async (parent, { _id}) => {
+  //return await Project.findById(_id).populate('clientGallery');
 },
-    user: async (parent, args, context) => {
-      if (context.user) { 
-        const user = await User.findById(context.user._id).populate({
-          path: 'ClientGallery.Project',
-          populate: 'clientGallery'
-        });
+//user: async (parent, args, context) => {
+  //if (context.user) { 
+   // const user = await User.findById(context.user._id).populate({
+      //path: 'ClientGallery.Project',
+     // populate: 'clientGallery'
+   // });
 
-        user.ClientGallery.sort((a,b) => b.purchaseDate - a.purchaseDate);
+   // user.ClientGallery.sort((a,b) => b.purchaseDate - a.purchaseDate);
 
-        return user;
-      }
-      throw new AuthenticationError('Not logged in.');
-    },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'ClientGallery.Project',
-          populate: 'clientGallery'
-        });
-        return user.ClientGallery.id(_id);
-      }
+    //return user;
+  //}
+  //throw new AuthenticationError('Not logged in.');
+//},
+//order: async (parent, { _id }, context) => {
+  //if (context.user) {
+    //const user = await User.findById(context.user._id).populate({
+     // path: 'ClientGallery.Project',
+      //populate: 'clientGallery'
+   // });
+   // return user.ClientGallery.id(_id);
+ // }
 
-      throw new AuthenticationError('Not logged in');
-    },
+ //throw new AuthenticationError('Not logged in');
+//},
 
-    checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      await new Purchase({ products: args.products });
-      const line_items = [];
+//checkout: async (parent, args, context) => {
+  //const url = new URL(context.headers.referer).origin;
+  //await new Purchase({ products: args.products });
+ // const line_items = [];
 
-      for (const product of args.products) {
-        line_items.push({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: product.name,
-              description: product.description
-            },
-          },
-        });
-      }
+  //for (const product of args.products) {
+    //line_items.push({
+     // price_data: {
+       // currency: 'usd',
+       // product_data: {
+        //  name: product.name,
+        // description: product.description
+    // },
+   //   },
+   // });
+ // }
 
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        mode: 'payment',
-      });
-      
-      return { session: sessions.id };
-    }
-  },
+  //const session = await stripe.checkout.sessions.create({
+  //  payment_method_types: ['card'],
+  //  mode: 'payment',
+ // });
+  
+//  return { session: sessions.id };
+//}
+//},
+//end stripe
+
   Mutation: {
     createUser: async (parent, args) => {
       const user = await User.create(args);
@@ -105,10 +108,11 @@ product: async (parent, { _id }) => {
       const project = await Project.create(args);
       return project;
     },
-    //createPurchase: async (parent, args) => {
-     // const purchase = await Purchase.create(args);
-     // return purchase;
-    //},
+    createPurchase: async (parent, args) => {
+     const purchase = await Purchase.create(args);
+      return purchase;
+    },
+
     createFavorite: async (parent, { userId, imageUrl }) => {
       console.log(userId, imageUrl);
       const user = await User.findById(userId);
@@ -121,11 +125,6 @@ product: async (parent, { _id }) => {
       $push: { favorites: image }, 
       }, { new: true})
 
-
-      //console.log(image);
-      //user.favorites.push(image);
-      //console.log("yohoho and a bottle of rum");
-      //user.save();
       
     },
 

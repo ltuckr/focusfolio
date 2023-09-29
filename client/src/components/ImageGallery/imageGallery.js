@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client"; 
+import { useMutation } from "@apollo/client";
 import styles from "./imageGallery.module.css";
 import { CREATE_FAVORITE } from "../../utils/mutations";
+import FavoriteButton from "../Favorite/FavoriteButton"; 
 
-// Image Imports
+// Image Imports 
 import B1Image from "../../images/B1.jpg";
 import B2Image from "../../images/B2.jpg";
 import B3Image from "../../images/B3.jpg";
@@ -17,7 +18,7 @@ import NB3Image from "../../images/NB3.JPG";
 import NB4Image from "../../images/NB4.JPG";
 import NB5Image from "../../images/NB5.JPG";
 
-// image data
+// Image data
 const images = [
   B1Image,
   B2Image,
@@ -39,15 +40,15 @@ export default function GalleryImgs() {
   const [isImageFavorited, setIsImageFavorited] = useState(false); // Track if the image is favorited
   const [commentText, setCommentText] = useState(""); // Store the comment text
 
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setIsImagePurchased(false); // Reset the purchase status when the modal is opened
+    setIsImageFavorited(false); // Reset the favorite status when the modal is opened
+    setCommentText(""); // Reset the comment text when the modal is opened
+  };
 
   const closeModal = () => {
     setSelectedImage(null);
-  };
-
-  const handlePurchase = () => {
-    // Implement logic to handle the purchase action (e.g., make an API request)
-    // Update the isImagePurchased state accordingly
-    setIsImagePurchased(true);
   };
 
   // Logic to create or remove a favorite
@@ -58,7 +59,6 @@ export default function GalleryImgs() {
       // Call the GraphQL mutation to create or remove a favorite
       await createFavorite({
         variables: {
-          userId: "YOUR_USER_ID", // Replace with the actual user ID
           imageUrl: selectedImage,
         },
       });
@@ -70,11 +70,7 @@ export default function GalleryImgs() {
     }
   };
 
-  const handleComment = () => {
-    // Implement logic to handle the comment action (e.g., make an API request)
-
-    console.log(`Comment added: ${commentText}`);
-  };
+  // ... (handlePurchase and handleComment functions if needed)
 
   return (
     <div className={styles.gallery}>
@@ -85,18 +81,25 @@ export default function GalleryImgs() {
             alt={`Image ${index}`}
             onClick={() => openModal(image)}
           />
+          <FavoriteButton
+            imageUrl={image}
+            isFavorited={isImageFavorited}
+            onToggleFavorite={(newFavoriteStatus) =>
+              setIsImageFavorited(newFavoriteStatus)
+            }
+          />
         </div>
       ))}
       {selectedImage && (
         <Modal
           image={selectedImage}
           onClose={closeModal}
-          onPurchase={handlePurchase}
+         // onPurchase={handlePurchase}
           isPurchased={isImagePurchased}
           onFavorite={handleFavorite}
           isFavorited={isImageFavorited}
           commentText={commentText}
-          onComment={handleComment}
+         // onComment={handleComment}
           onCommentTextChange={(e) => setCommentText(e.target.value)}
         />
       )}
