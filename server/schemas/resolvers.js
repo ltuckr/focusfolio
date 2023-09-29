@@ -99,40 +99,60 @@ const resolvers = {
 //},
 //end stripe
 
-  Mutation: {
-    createUser: async (parent, args) => {
-      const user = await User.create(args);
-      return user;
-    },
-    createProject: async (parent, args) => {
-      const project = await Project.create(args);
-      return project;
-    },
-    createPurchase: async (parent, args) => {
-     const purchase = await Purchase.create(args);
-      return purchase;
-    },
-
-    createFavorite: async (parent, { userId, imageUrl }) => {
-      console.log(userId, imageUrl);
-      const user = await User.findById(userId);
-      console.log(user);
-
-      if (!user) throw new Error("User does not exist");
-
-      const image = await Image.create({ imageUrl });
-      return User.findByIdAndUpdate(userId, {
-      $push: { favorites: image }, 
-      }, { new: true})
-
-      
-    },
-
-    createComment: async (parent, args) => {
-      const comment = await Comment.create(args);
-      return comment;
-    },
+Mutation: {
+  createUser: async (parent, args) => {
+    const user = await User.create(args);
+    return user;
   },
+  createProject: async (parent, args) => {
+    const project = await Project.create(args);
+    return project;
+  },
+  createPurchase: async (parent, args) => {
+    const purchase = await Purchase.create(args);
+    return purchase;
+  },
+
+  createFavorite: async (parent, { imageId }, context) => {
+    if (context.user) {
+      const user = context.user;
+
+      // Check if the image exists
+      const image = await Image.findById(imageId);
+
+      if (!image) {
+        throw new Error('Image not found');
+      }
+
+      // Check if the user has already favorited this image
+      const existingFavorite = await Favorite.findOne({
+        user: user._id,
+        image: image._id,
+      });
+
+      if (existingFavorite) {
+        throw new Error('Image is already favorited');
+      }
+
+      // Create a new favorite entry
+      const favorite = new Favorite({
+        user: user._id,
+        image: image._id,
+      });
+
+      await favorite.save();
+
+      return favorite;
+    } else {
+      throw new Error('Authentication required to favorite an image');
+    }
+  },
+
+  createComment: async (parent, args) => {
+    const comment = await Comment.create(args);
+    return comment;
+  },
+},
 };
 
 module.exports = resolvers;

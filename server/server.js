@@ -1,6 +1,8 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
+const jwt = require('jsonwebtoken');
+const { authMiddleware } = require('./auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
@@ -11,6 +13,21 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => {
+    // Extract the JWT token from the request headers
+    const token = req.headers.authorization || '';
+
+    try {
+      // Verify and decode the JWT token using your secret key
+      const decodedToken = jwt.verify(token, 'your-secret-key'); // Replace with your actual secret key
+
+      // Set the user information in the context
+      return { user: decodedToken };
+    } catch (error) {
+      // If the token is invalid or missing, user will be null in context
+      return { user: null };
+    }
+  },
 });
 
 // Middleware to parse JSON and URL-encoded data
@@ -20,7 +37,7 @@ app.use(express.json());
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  
+
   // Serve the React frontend
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
