@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client"; 
 import styles from "./imageGallery.module.css";
 import { CREATE_FAVORITE } from "../../utils/mutations";
 
@@ -38,12 +39,6 @@ export default function GalleryImgs() {
   const [isImageFavorited, setIsImageFavorited] = useState(false); // Track if the image is favorited
   const [commentText, setCommentText] = useState(""); // Store the comment text
 
-  const openModal = (image) => {
-    setSelectedImage(image);
-    setIsImagePurchased(false); // Reset the purchase status when the modal is opened
-    setIsImageFavorited(false); // Reset the favorite status when the modal is opened
-    setCommentText(""); // Reset the comment text when the modal is opened
-  };
 
   const closeModal = () => {
     setSelectedImage(null);
@@ -55,10 +50,24 @@ export default function GalleryImgs() {
     setIsImagePurchased(true);
   };
 
-  const handleFavorite = () => {
-    // Implement logic to handle the favorite action (e.g., make an API request)
-    // Update the isImageFavorited state accordingly
-    setIsImageFavorited(!isImageFavorited); // Toggle the favorite status
+  // Logic to create or remove a favorite
+  const [createFavorite] = useMutation(CREATE_FAVORITE);
+
+  const handleFavorite = async () => {
+    try {
+      // Call the GraphQL mutation to create or remove a favorite
+      await createFavorite({
+        variables: {
+          userId: "YOUR_USER_ID", // Replace with the actual user ID
+          imageUrl: selectedImage,
+        },
+      });
+
+      // Update the isImageFavorited state accordingly
+      setIsImageFavorited(!isImageFavorited); // Toggle the favorite status
+    } catch (error) {
+      console.error("Error favoriting image:", error);
+    }
   };
 
   const handleComment = () => {
