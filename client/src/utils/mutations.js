@@ -1,5 +1,11 @@
 import { gql } from '@apollo/client';
 
+mutation CreateFavorite($userId: ID!, $imageUrl: String!) {
+  createFavorite(userId: $userId, imageUrl: $imageUrl) {
+    _id
+  }
+}
+
 export const CREATE_USER = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {
@@ -43,15 +49,12 @@ export const CREATE_PURCHASE = gql`
 `;
 
 export const CREATE_FAVORITE = gql`
-  mutation createFavorite($user_id: ID!, $image_id: ID!) {
-    createFavorite(user_id: $user_id, image_id: $image_id) {
-      _id
-      user_id
-      image_id
-      created_at
-    }
+mutation CreateFavorite($userId: ID!, $imageUrl: String!) {
+  createFavorite(userId: $userId, imageUrl: $imageUrl) {
+    _id
   }
-`;
+}
+`; //updated with Andrew B. NO TOUCHIE! 
 
 export const CREATE_COMMENT = gql`
   mutation createComment($user_id: ID!, $image_id: ID!, $text: String!) {

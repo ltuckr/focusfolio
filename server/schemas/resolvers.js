@@ -43,6 +43,60 @@ const resolvers = {
         );
       }
     },
+
+    // stripe 
+    product: async (parent, { _id}) => {
+      return await Project.findById(_id).populate('clientGallery');
+    },
+    user: async (parent, args, context) => {
+      if (context.user) { 
+        const user = await User.findById(context.user._id).populate({
+          path: 'ClientGallery.Project',
+          populate: 'clientGallery'
+        });
+
+        user.ClientGallery.sort((a,b) => b.purchaseDate - a.purchaseDate);
+
+        return user;
+      }
+      throw new AuthenticationError('Not logged in.');
+    },
+    order: async (parent, { _id }, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate({
+          path: 'ClientGallery.Project',
+          populate: 'clientGallery'
+        });
+        return user.ClientGallery.id(_id);
+      }
+
+      throw new AuthenticationError('Not logged in');
+    },
+
+    checkout: async (parent, args, context) => {
+      const url = new URL(context.headers.referer).origin;
+      await new Purchase({ products: args.products });
+      const line_items = [];
+
+      for (const product of args.products) {
+        line_items.push({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: product.name,
+              description: product.description
+            },
+          },
+        });
+      }
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        mode: 'payment',
+      });
+      
+      return { session: sessions.id };
+    }
   },
   Mutation: {
     createUser: async (parent, args) => {
