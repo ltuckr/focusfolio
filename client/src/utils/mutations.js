@@ -1,10 +1,5 @@
 import { gql } from '@apollo/client';
 
-mutation CreateFavorite($userId: ID!, $imageUrl: String!) {
-  createFavorite(userId: $userId, imageUrl: $imageUrl) {
-    _id
-  }
-}
 
 export const CREATE_USER = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
@@ -37,7 +32,7 @@ export const CREATE_PROJECT = gql`
 `;
 
 
-
+//updated with Andrew B. NO TOUCHIE! 
 export const CREATE_FAVORITE = gql`
 mutation CreateFavorite($userId: ID!, $imageUrl: String!) {
   createFavorite(userId: $userId, imageUrl: $imageUrl) {
