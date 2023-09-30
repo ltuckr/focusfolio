@@ -1,34 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-import styles from './login.module.css'; 
+import styles from './login.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
+  const navigate = useNavigate();
 
   const [login, { loading }] = useMutation(LOGIN);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      console.log('handleFormSubmit called'); // Log to check if the function is called.
+      console.log('handleFormSubmit called');
       const mutationResponse = await login({
         variables: { email, password },
       });
-      console.log('mutationResponse:', mutationResponse); // Log the mutation response.
+      console.log('mutationResponse:', mutationResponse);
       const token = mutationResponse.data.login.token;
-      console.log('Received token:', token); // Log the received token.
+      console.log('Received token:', token);
       Auth.login(token);
+      setShowWelcomeMessage(true);
     } catch (e) {
-      console.error('Error in handleFormSubmit:', e); // Log any errors.
+      console.error('Error in handleFormSubmit:', e);
       setError('The provided credentials are incorrect');
     }
   };
 
-  console.log('Rendering Login component'); // Log when the component is rendered.
+  useEffect(() => {
+    if (showWelcomeMessage) {
+      setTimeout(() => {
+        navigate('/home'); // Navigate to the homepage after a delay (e.g., 2 seconds)
+      }, 2000); // Adjust the delay time as needed
+    }
+  }, [showWelcomeMessage, navigate]);
+
+  console.log('Rendering Login component');
 
   return (
     <div className={styles.loginContainer}>
@@ -58,6 +70,11 @@ const Login = () => {
       >
         {loading ? 'Logging in...' : 'Login'}
       </button>
+      {showWelcomeMessage && (
+        <div className={`${styles.welcomeMessage} ${styles.blackText}`}>
+          <p>Welcome! You have successfully logged in.</p>
+        </div>
+      )}
     </div>
   );
 };
