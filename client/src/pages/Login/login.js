@@ -14,16 +14,21 @@ const Login = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
+      console.log('handleFormSubmit called'); // Log to check if the function is called.
       const mutationResponse = await login({
         variables: { email, password },
       });
+      console.log('mutationResponse:', mutationResponse); // Log the mutation response.
       const token = mutationResponse.data.login.token;
+      console.log('Received token:', token); // Log the received token.
       Auth.login(token);
     } catch (e) {
-      console.error(e);
+      console.error('Error in handleFormSubmit:', e); // Log any errors.
       setError('The provided credentials are incorrect');
     }
   };
+
+  console.log('Rendering Login component'); // Log when the component is rendered.
 
   return (
     <div className={styles.loginContainer}>

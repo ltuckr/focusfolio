@@ -5,7 +5,7 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // Your existing queries
+  
   },
 
   Mutation: {
