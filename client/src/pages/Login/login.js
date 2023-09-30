@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations';
-import Auth from '../utils/auth';
+import { LOGIN } from '../../utils/mutations'; // Adjust the path accordingly
+import Auth from '../../utils/auth'; // Correct path provided
 import styles from "../Login/login.module.css";
 
 export default function Login() {

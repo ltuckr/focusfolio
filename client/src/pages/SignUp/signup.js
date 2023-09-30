@@ -1,48 +1,32 @@
 import React, { useState } from "react";
-// import styles from "./signup.module.css";
-import styles from "../SignUp/signup.module.css"
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from '../../utils/mutations'; // Adjust the path accordingly
+import Auth from '../../utils/auth'; // Import your authentication module if needed
+import styles from "../SignUp/signup.module.css";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  const [createUser, { error }] = useMutation(CREATE_USER); // Use createUser mutation
+  
+  const handleSignup = async () => {
+    try {
+      const { data } = await createUser({
+        variables: { username, email, password },
+      });
 
-  const [usernameError, setUsernameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+      // Assuming your server returns a token upon successful signup
+      const token = data.createUser.token;
+      
+      // Perform login logic with the token using your Auth module
+      Auth.login(token);
 
-  const handleSignup = () => {
-    console.log("Signing up with:", username, email, password);
-
-    // Reset previous errors
-    setUsernameError("");
-    setEmailError("");
-    setPasswordError("");
-
-    // Clear input fields
-    setUsername("");
-    setEmail("");
-    setPassword("");
-
-    // Validate username
-    if (!username) {
-      setUsernameError("Username is required");
-    }
-
-    // Validate email
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if (!email || !emailRegex.test(email)) {
-      setEmailError("Enter a valid email address");
-    }
-
-    // Validate password
-    if (!password || password.length < 8) {
-      setPasswordError("Password must be at least 8 characters");
-    }
-
-    // If there are no errors, proceed with signup
-    if (!usernameError && !emailError && !passwordError) {
-      console.log("Signing up with:", username, email, password);
+      // Redirect or perform other actions after successful signup
+      // Example: history.push('/dashboard');
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -57,8 +41,9 @@ export default function Signup() {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      {usernameError && (
-        <span className={styles.signupError}>{usernameError}</span>
+      {/* Display username error */}
+      {error && error.graphQLErrors[0] && error.graphQLErrors[0].extensions.exception.errors.username && (
+        <span className={styles.signupError}>{error.graphQLErrors[0].extensions.exception.errors.username}</span>
       )}
       <input
         className={styles.signupInput}
@@ -67,7 +52,10 @@ export default function Signup() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      {emailError && <span className={styles.signupError}>{emailError}</span>}
+      {/* Display email error */}
+      {error && error.graphQLErrors[0] && error.graphQLErrors[0].extensions.exception.errors.email && (
+        <span className={styles.signupError}>{error.graphQLErrors[0].extensions.exception.errors.email}</span>
+      )}
       <input
         className={styles.signupInput}
         type="password"
@@ -75,8 +63,9 @@ export default function Signup() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      {passwordError && (
-        <span className={styles.signupError}>{passwordError}</span>
+      {/* Display password error */}
+      {error && error.graphQLErrors[0] && error.graphQLErrors[0].extensions.exception.errors.password && (
+        <span className={styles.signupError}>{error.graphQLErrors[0].extensions.exception.errors.password}</span>
       )}
       <button onClick={handleSignup} className={styles.signupBtn}>
         Sign Up
