@@ -2,15 +2,16 @@ import { gql } from '@apollo/client';
 
 
 export const CREATE_USER = gql`
-  mutation createUser($username: String!, $email: String!, $password: String!) {
-    createUser(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-        email 
-      }
+mutation CreateUser($username: String!, $email: String!, $password: String!) {
+  createUser(username: $username, email: $email, password: $password) {
+    token
+    user {
+      _id
+      username
+      email
+    }
   }
+}
 `;
 
 export const LOGIN = gql`
@@ -48,11 +49,11 @@ export const CREATE_PROJECT = gql`
 
 //updated with Andrew B. NO TOUCHIE! 
 export const CREATE_FAVORITE = gql`
-mutation CreateFavorite($userId: ID!, $imageId: ID!) {
-  createFavorite(userId: $userId, imageUrl: $imageId: ID!) {
-    _id
+  mutation CreateFavorite($userId: ID!, $imageId: ID!) {
+    createFavorite(userId: $userId, imageId: $imageId) {
+      _id
+    }
   }
-}
 `; //updated with Andrew B. NO TOUCHIE! 
 
 export const CREATE_COMMENT = gql`
