@@ -4,18 +4,11 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth'); 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-const cors = require('cors'); 
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Configure CORS
-const corsOptions = {
-  origin: 'http://localhost:3000', // Allow requests from the React client
-  credentials: true, // Enable credentials (cookies, authorization headers)
-};
-
-app.use(cors(corsOptions));
 
 // Initialize Apollo Server with typeDefs and resolvers
 const server = new ApolloServer({

@@ -17,14 +17,13 @@ export default function Signup() {
         variables: { username, email, password },
       });
 
-      // Assuming your server returns a token upon successful signup
+      
       const token = data.createUser.token;
       
-      // Perform login logic with the token using your Auth module
+     
       Auth.login(token);
 
-      // Redirect or perform other actions after successful signup
-      // Example: history.push('/dashboard');
+      // Clear form
     } catch (e) {
       console.error(e);
     }
