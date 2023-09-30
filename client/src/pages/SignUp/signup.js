@@ -1,49 +1,42 @@
 import React, { useState } from "react";
-// import styles from "./signup.module.css";
-import styles from "../SignUp/signup.module.css"
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from '../../utils/mutations'; 
+import Auth from '../../utils/auth'; 
+import styles from "./signup.module.css";
 
-export default function Signup() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Signup(props) {
+  const [formState, setFormState] = useState({ username: "", email: "", password: "" });
+  const [createUser] = useMutation(CREATE_USER);
+  const [error, setError] = useState(null);
 
-  const [usernameError, setUsernameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await createUser({
+        variables: {
+          email: formState.email,
+          password: formState.password,
+          username: formState.username,
+        },
+      });
 
-  const handleSignup = () => {
-    console.log("Signing up with:", username, email, password);
-
-    // Reset previous errors
-    setUsernameError("");
-    setEmailError("");
-    setPasswordError("");
-
-    // Clear input fields
-    setUsername("");
-    setEmail("");
-    setPassword("");
-
-    // Validate username
-    if (!username) {
-      setUsernameError("Username is required");
+      if (data && data.createUser && data.createUser.token) {
+        const token = data.createUser.token;
+        Auth.login(token);
+      } else {
+        setError("Authentication failed. Please try again.");
+      }
+    } catch (e) {
+      setError(e.message);
     }
+  };
 
-    // Validate email
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if (!email || !emailRegex.test(email)) {
-      setEmailError("Enter a valid email address");
-    }
-
-    // Validate password
-    if (!password || password.length < 8) {
-      setPasswordError("Password must be at least 8 characters");
-    }
-
-    // If there are no errors, proceed with signup
-    if (!usernameError && !emailError && !passwordError) {
-      console.log("Signing up with:", username, email, password);
-    }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
 
   return (
@@ -54,33 +47,36 @@ export default function Signup() {
         className={styles.signupInput}
         type="text"
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        name="username"
+        value={formState.username}
+        onChange={handleChange}
       />
-      {usernameError && (
-        <span className={styles.signupError}>{usernameError}</span>
-      )}
       <input
         className={styles.signupInput}
         type="email"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        name="email"
+        value={formState.email}
+        onChange={handleChange}
       />
-      {emailError && <span className={styles.signupError}>{emailError}</span>}
       <input
         className={styles.signupInput}
         type="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        name="password"
+        value={formState.password}
+        onChange={handleChange}
       />
-      {passwordError && (
-        <span className={styles.signupError}>{passwordError}</span>
+      {error && (
+        <div className={styles.signupError}>
+          <p>{error}</p>
+        </div>
       )}
-      <button onClick={handleSignup} className={styles.signupBtn}>
+      <button onClick={handleFormSubmit} className={styles.signupBtn}>
         Sign Up
       </button>
     </div>
   );
 }
+
+export default Signup;

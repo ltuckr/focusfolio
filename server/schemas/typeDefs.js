@@ -10,6 +10,11 @@ const typeDefs = gql`
     comments: [Comment]!
   }
 
+  type Auth {
+    token: ID
+    user: User
+  }
+
   type Project {
     _id: ID!
     title: String!
@@ -22,7 +27,15 @@ const typeDefs = gql`
 
   type Image {
     _id: ID!
-    imageUrl: String
+    imageUrl: String!
+    user: User!
+    favorites: [Favorite!]!
+  }
+
+  type Favorite {
+    _id: ID!
+    user: User!
+    image: Image!
   }
 
   type Product {
@@ -43,18 +56,24 @@ const typeDefs = gql`
     projects: [Project]!
     project(_id: ID!): Project
     users: [User]!
-    user(_id: ID!): User
     purchases: [Product]!
     comments: [Comment]!
     clientGalleryImages: [Project]!  # Add this query
   }
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): User
+    
+    createUser(username: String!, email: String!, password: String!): Auth
+
     createProject(title: String!, description: String!, images: [String]!): Project
+
     createPurchase(projectId: ID!): Product  # Updated this line to return a Product
-    createFavorite(userId: ID!, imageUrl: String!): User
+
+    createFavorite(imageId: ID!): Favorite
+
     createComment(projectId: ID!, text: String!): Comment
+
+    login(email: String!, password: String!): Auth
   }
 `;
 
