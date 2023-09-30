@@ -1,34 +1,33 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from '../../utils/mutations'; // Adjust the path accordingly
-import Auth from '../../utils/auth'; // Import your authentication module if needed
+import { CREATE_USER } from '../../utils/mutations'; 
+import Auth from '../../utils/auth'; 
 import styles from "../SignUp/signup.module.css";
 
-export default function Signup() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  
-  const [createUser, { error }] = useMutation(CREATE_USER); // Use createUser mutation
-  
-  const handleSignup = async () => {
-    try {
-      const { data } = await createUser({
-        variables: { username, email, password },
-      });
+function Signup(props) {
+  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [addUser] = useMutation(CREATE_USER);
 
-      
-      const token = data.createUser.token;
-      
-     
-      Auth.login(token);
-
-      // Clear form
-    } catch (e) {
-      console.error(e);
-    }
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const mutationResponse = await addUser({
+      variables: {
+        email: formState.email,
+        password: formState.password,
+        username: formState.username,
+      },
+    });
+    const token = mutationResponse.data.addUser.token;
+    Auth.login(token);
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
   return (
     <div className={styles.signupContainer}>
       <h2 className={styles.signupText}>Sign Up</h2>
@@ -72,3 +71,5 @@ export default function Signup() {
     </div>
   );
 }
+
+export default signup;

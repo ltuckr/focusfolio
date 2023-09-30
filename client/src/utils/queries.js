@@ -7,9 +7,7 @@ export const QUERY_USERS = gql`
       username
       email
       password
-      bio
-      created_at
-      updated_at
+     
     }
   }
 `;
@@ -50,7 +48,6 @@ export const QUERY_FAVORITES = gql`
       _id
       user_id
       image_id
-      created_at
     }
   }
 `;
