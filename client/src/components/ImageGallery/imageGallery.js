@@ -10,6 +10,7 @@ import NB2Image from "../../images/NB2.jpg";
 import NB3Image from "../../images/NB3.jpg";
 import NB4Image from "../../images/NB4.jpg";
 import NB5Image from "../../images/NB5.jpg";
+import NB6Image from "../../images/NB6.jpg";
 
 // Image data
 const images = [
@@ -18,6 +19,7 @@ const images = [
   NB3Image,
   NB4Image,
   NB5Image,
+  NB6Image,
 ];
 
 
