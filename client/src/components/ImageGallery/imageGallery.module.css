@@ -2,13 +2,13 @@
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   margin: 20px;
 }
 
 /* Style for each gallery item (image) */
 .galleryItem {
-  flex-basis: calc(25% - 20px);
+  flex-basis: calc(40% - 20px);
     margin: 20px; /* Increase the margin to add more vertical space */
     cursor: pointer;
     transition: transform 0.2s; 
