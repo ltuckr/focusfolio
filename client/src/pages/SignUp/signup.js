@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from '../../utils/mutations'; 
 import Auth from '../../utils/auth'; 
 import styles from "./signup.module.css";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 function Signup(props) {
   const [formState, setFormState] = useState({ username: "", email: "", password: "" });
   const [createUser] = useMutation(CREATE_USER);
   const [error, setError] = useState(null);
+  const [showConfirmationMessage, setShowConfirmationMessage] = useState(false); // New state for confirmation message
+  const navigate = useNavigate(); // Initialize navigate from react-router-dom
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -23,6 +26,7 @@ function Signup(props) {
       if (data && data.createUser && data.createUser.token) {
         const token = data.createUser.token;
         Auth.login(token);
+        setShowConfirmationMessage(true); // Show confirmation message on successful signup
       } else {
         setError("Authentication failed. Please try again.");
       }
@@ -30,6 +34,14 @@ function Signup(props) {
       setError(e.message);
     }
   };
+
+  useEffect(() => {
+    if (showConfirmationMessage) {
+      setTimeout(() => {
+        navigate('/home'); // Navigate to the homepage after a delay 
+      }, 1000); // Adjust the delay time as needed
+    }
+  }, [showConfirmationMessage, navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -72,6 +84,12 @@ function Signup(props) {
           <p>{error}</p>
         </div>
       )}
+      
+      {showConfirmationMessage && (
+  <div className={`${styles.signupConfirmation} ${styles.blackText}`}>
+    <p>Thank you for signing up! Your account has been created.</p>
+  </div>
+)}
       <button onClick={handleFormSubmit} className={styles.signupBtn}>
         Sign Up
       </button>

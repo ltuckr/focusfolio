@@ -104,7 +104,6 @@ export default GalleryImgs;
 
 function Modal({
   image,
-  images,
   isFavorited, // Receive isFavorited prop
   setIsImageFavorited, // Receive setIsImageFavorited prop
   onClose,
@@ -129,7 +128,7 @@ function Modal({
             }}
           />
         </div>
-        {/* Add your comment input field here */}
+        {/* Add comment input field here */}
         <textarea
           value={commentText}
           onChange={onCommentTextChange}
