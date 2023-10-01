@@ -1,42 +1,64 @@
-/* Style for the gallery container */
 .gallery {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   margin: 20px;
-}
-
-/* Style for each gallery item (image) */
-.galleryItem {
-  flex-basis: calc(40% - 20px);
-    margin: 20px; /* Increase the margin to add more vertical space */
-    cursor: pointer;
-    transition: transform 0.2s; 
-}
-
-.favoriteButtonContainer {
+  }
+  
+  /* Style for each gallery item (image) */
+  .galleryItem {
+  flex-basis: calc(40%);
+  margin: 20px; /* Increase the margin to add more vertical space */
+  cursor: pointer;
+  transition: transform 0.2s;
+  }
+  
+  
+  .imageContainer {
+  position: relative;
+  display: inline-block;
+  }
+  
+  
+  .favoriteButtonContainer {
   position: absolute;
-  top: 10px; /* Adjust top positioning as needed */
-  left: 10px; /* Adjust left positioning as needed */
-  z-index: 2; /* Ensure the heart icon is above the image */
-}
-
-.favoriteButtonContainer svg {
+  bottom: 0; /* Adjust the vertical position of the button */
+  left: 0; /* Adjust the horizontal position of the button */
+  background: transparent;
+  border: none;
+  padding: 20px 20px; /* Adjust padding as needed */
+  cursor: pointer;
+  font-size: 25px;
+  }
+  
+  
+  .favoriteButtonContainer svg {
   fill: red; /* You can change the color of the heart icon as desired */
-}
-
-.galleryItem:hover {
-  transform: scale(1.1); /* Enlarge the image on hover */
-}
-
-.galleryItem img {
+  }
+  
+  
+  .favoriteButtonWrapper {
+  position: absolute;
+  /* bottom: 0;
+  left: 0; */
+  z-index: 2;
+  }
+  
+  
+  .imageItem:hover {
+  transform: scale(1.1);
+  }
+  
+  
+  .galleryItem img {
   max-width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* Style for the modal */
-.modal {
+  }
+  
+  
+  /* Style for the modal */
+  .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -47,34 +69,58 @@
   z-index: 1;
   justify-content: center;
   align-items: center;
-}
-
-.modalContent {
+  }
+  
+  
+  .modalContent {
   background-color: white;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
   position: relative;
-}
-
-.close {
+  }
+  
+  
+  .close {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 24px;
   cursor: pointer;
-}
-
-/* responsive */
-@media screen and (max-width: 768px) {
-  .galleryItem {
-    flex-basis: calc(50% - 10px);
   }
-}
-
-@media screen and (max-width: 480px) {
+  
+  
+  /* responsive */
+  @media screen and (max-width: 768px) {
   .galleryItem {
-    flex-basis: calc(100% - 10px);
+  flex-basis: calc(50% - 10px);
   }
-}
+  .favoriteButtonContainer {
+  font-size: 20px;
+  padding: 15px 15px;
+  }
+  }
+  
+  
+  @media screen and (max-width: 480px) {
+  .galleryItem {
+  flex-basis: calc(100% - 10px);
+  }
+  .favoriteButtonContainer {
+  font-size: 15px;
+  padding: 10px 10px;
+  }
+  }
+  
+  
+  @media screen and (max-width: 200px) {
+  .galleryItem {
+  flex-basis: calc(100% - 10px);
+  }
+  .favoriteButtonContainer {
+  font-size: 10px;
+  padding: 5px 5px;
+  }
+  }
+  

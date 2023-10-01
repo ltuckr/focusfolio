@@ -6,17 +6,20 @@ import FavoriteButton from "../Favorite/FavoriteButton";
 
 // Image data
 const images = [
-  NB1Image,
-  NB2Image,
-  NB3Image,
-  NB4Image,
-  NB5Image,
-  NB6Image,
+NB1Image,
+NB2Image,
+NB3Image,
+NB4Image,
+NB5Image,
+NB6Image
 ];
 
+
+
 const GalleryImgs = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isImageFavorited, setIsImageFavorited] = useState(false);
+const [selectedImage, setSelectedImage] = useState(null);
+const [isImageFavorited, setIsImageFavorited] = useState(false);
+const [commentText, setCommentText] = useState("");
 
 
   const openModal = (image) => {
@@ -28,6 +31,10 @@ const GalleryImgs = () => {
 
   const [addFavorite] = useMutation(ADD_FAVORITE);
   const [removeFavorite] = useMutation(REMOVE_FAVORITE);
+
+const [addFavorite] = useMutation(ADD_FAVORITE);
+const [removeFavorite] = useMutation(REMOVE_FAVORITE);
+
 
   const handleFavorite = async () => {
     try {
@@ -53,24 +60,29 @@ const GalleryImgs = () => {
     }
   };
 
-  return (
-    <div className={styles.gallery}>
-      {images.map((image, index) => (
-        <div key={index} className={styles.galleryItem}>
-          <img
-            src="assets/images/NB1.JPG"
-            alt={`Image ${index}`}
-            onClick={() => openModal(image)}
-          />
-          <FavoriteButton
-            imageUrl={image}
-            isFavorited={isImageFavorited}
-            onToggleFavorite={handleFavorite}
-          />
-        </div>
-      ))}
-    </div>
-  );
+return (
+<div className={styles.gallery}>
+{images.map((image, index) => (
+<div key={index} className={styles.galleryItem}>
+<div className={styles.imageContainer}>
+<img
+src={image}
+alt={`Image ${index}`}
+onClick={() => openModal(image)}
+className={styles.imageItem}
+/>
+
+
+<FavoriteButton className={styles.favoriteButtonContainer}
+imageUrl={image}
+isFavorited={isImageFavorited}
+onToggleFavorite={handleFavorite}
+/>
+</div>
+</div>
+))}
+</div>
+);
 };
 
 export default GalleryImgs;
