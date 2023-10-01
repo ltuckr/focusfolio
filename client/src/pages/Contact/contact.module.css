@@ -1,6 +1,6 @@
 /* contact.module.css */
 .contactContainer {
-    max-width: 600px; /* Adjust the maximum width as needed */
+    max-width: 600px; 
     margin: 0 auto;
     padding: 20px;
   }
@@ -27,27 +27,33 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px; /* Increase the font size as needed */
+    font-size: 16px; 
   }
   
   .contactError {
     color: red;
-    font-size: 14px; /* Increase the font size for error messages */
+    font-size: 14px; /* Increased the font size for error messages */
   }
   
- 
-.formBtn {
-    background-color: black; /* Set the background color to black */
+  .formBox {
+    text-align: center; /* Center-align the content inside the formBox */
+  }
+  
+  .formBtn {
+    background-color: black;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     font-size: 18px;
     cursor: pointer;
+    margin-top: 10px; /* Add some top margin to the button for spacing */
+    display: block; /* Make the button a block-level element */
+    margin-left: auto; /* Auto margin on the left to center the button */
+    margin-right: auto; /* Auto margin on the right to center the button */
   }
   
   .formBtn:hover {
-    background-color: #333; /* Darken the background color on hover */
+    background-color: #333;
   }
-  
  
