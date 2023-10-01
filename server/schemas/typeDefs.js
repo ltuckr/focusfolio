@@ -5,9 +5,8 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    purchases: [Product]!
     favorites: [Image]!
-    comments: [Comment]!
+    
   }
 
   type Auth {
@@ -15,21 +14,11 @@ const typeDefs = gql`
     user: User
   }
 
-  type Project {
-    _id: ID!
-    title: String!
-    description: String!
-    images: [Image]!
-    user: User!
-    galleryType: String  # Add this field (e.g., "general" or "client")
-    tags: [String]  # Add tags or categories if needed
-  }
 
   type Image {
     _id: ID!
-    imageUrl: String!
-    user: User!
-    favorites: [Favorite!]!
+    image: String!
+
   }
 
   type Favorite {
@@ -65,11 +54,11 @@ const typeDefs = gql`
     
     createUser(username: String!, email: String!, password: String!): Auth
 
-    createProject(title: String!, description: String!, images: [String]!): Project
-
     createPurchase(projectId: ID!): Product  # Updated this line to return a Product
 
-    createFavorite(imageId: ID!): Favorite
+    addFavorite(imageId: ID!): Image
+
+    removeFavorite(userId: ID!, imageId: ID!): User
 
     createComment(projectId: ID!, text: String!): Comment
 

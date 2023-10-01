@@ -38,6 +38,7 @@ function Signup(props) {
   useEffect(() => {
     if (showConfirmationMessage) {
       setTimeout(() => {
+
         navigate('/home'); // Navigate to the homepage after a delay
       }, 1000); // Adjust the delay time as needed
     }
@@ -83,12 +84,14 @@ function Signup(props) {
         <div className={styles.signupError}>
           <p>{error}</p>
         </div>
-      )}
+      )}<<<<<<< feature/add-updates-clientside
+      
       {showConfirmationMessage && (
-        <div className={styles.signupConfirmation}>
-          <p>Thank you for signing up! Your account has been created.</p>
-        </div>
-      )}
+  <div className={`${styles.signupConfirmation} ${styles.blackText}`}>
+    <p>Thank you for signing up! Your account has been created.</p>
+  </div>
+)}
+
       <button onClick={handleFormSubmit} className={styles.signupBtn}>
         Sign Up
       </button>

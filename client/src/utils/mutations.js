@@ -28,59 +28,35 @@ export const LOGIN = gql`
   }
 `;
 
-export const CREATE_PROJECT = gql`
-  mutation createProject($title: String!, $description: String!, $images: [ImageInput]!) {
-    createProject(title: $title, description: $description, images: $images) {
-      _id
-      title
-      description
-      images {
-        _id
-        imageUrl
-        description
-      }
-      user_id
-      created_at
-      updated_at
-    }
-  }
-`;
-
-
-//updated with Andrew B. NO TOUCHIE! 
-export const CREATE_FAVORITE = gql`
-  mutation CreateFavorite($userId: ID!, $imageId: ID!) {
-    createFavorite(userId: $userId, imageId: $imageId) {
-      _id
-    }
-  }
-`; //updated with Andrew B. NO TOUCHIE! 
-
-export const CREATE_COMMENT = gql`
-  mutation createComment($user_id: ID!, $image_id: ID!, $text: String!) {
-    createComment(user_id: $user_id, image_id: $image_id, text: $text) {
-      _id
-      user_id
-      image_id
-      text
-      created_at
-    }
-  }
-`;
-
-export const CREATE_IMAGE = gql`
-  mutation createImage($imageUrl: String!, $description: String!) {
-    createImage(imageUrl: $imageUrl, description: $description) {
+export const ADD_FAVORITE = gql`
+  mutation AddFavorite($imageId: ID!) {
+    addFavorite(imageId: $imageId) {
       _id
       imageUrl
-      description
+      favorites {
+        _id
+        user {
+          _id
+        }
+      }
     }
   }
 `;
 
-export const ImageInput = gql`
-  input ImageInput {
-    imageUrl: String!
-    description: String!
+export const REMOVE_FAVORITE = gql`
+  mutation RemoveFavorite($imageId: ID!) {
+    removeFavorite(imageId: $imageId) {
+      _id
+      imageUrl
+      favorites {
+        _id
+        user {
+          _id
+        }
+      }
+    }
   }
 `;
+
+
+
