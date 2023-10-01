@@ -4,7 +4,7 @@ import styles from "./imageGallery.module.css";
 import { ADD_FAVORITE, REMOVE_FAVORITE } from "../../utils/mutations"; // Import the mutations from your file
 import FavoriteButton from "../Favorite/FavoriteButton";
 
-// Image Imports 
+// Image Imports
 import NB1Image from "../../images/NB1.jpg";
 import NB2Image from "../../images/NB2.jpg";
 import NB3Image from "../../images/NB3.jpg";
@@ -22,21 +22,18 @@ const images = [
   NB6Image,
 ];
 
-
 const GalleryImgs = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isImageFavorited, setIsImageFavorited] = useState(false);
-  const [commentText, setCommentText] = useState("");
+
 
   const openModal = (image) => {
     setSelectedImage(image);
     setIsImageFavorited(false);
-    setCommentText("");
+   
   };
 
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
+ 
 
   const [addFavorite] = useMutation(ADD_FAVORITE);
   const [removeFavorite] = useMutation(REMOVE_FAVORITE);
@@ -47,14 +44,14 @@ const GalleryImgs = () => {
         // If not favorited, add the favorite
         await addFavorite({
           variables: {
-            imageId: selectedImage,
+            imageId: selectedImage.replace(/\.[^/.]+$/, ""), // Remove file extension from image name
           },
         });
       } else {
         // If already favorited, remove the favorite
         await removeFavorite({
           variables: {
-            imageId: selectedImage,
+            imageId: selectedImage.replace(/\.[^/.]+$/, ""), // Remove file extension from image name
           },
         });
       }
