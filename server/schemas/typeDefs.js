@@ -18,9 +18,9 @@ const typeDefs = gql`
 
   type Image {
     _id: ID!
-    identifier: String! # Add this field to match your updated Image model
+    identifier: String!
     user: User!
-    favorites: [Favorite!]!
+    favorites: Boolean 
   }
 
   type Favorite {
