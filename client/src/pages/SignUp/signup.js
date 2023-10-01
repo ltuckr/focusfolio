@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from '../../utils/mutations'; 
-import Auth from '../../utils/auth'; 
+import { CREATE_USER } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 import styles from "./signup.module.css";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
@@ -38,7 +38,8 @@ function Signup(props) {
   useEffect(() => {
     if (showConfirmationMessage) {
       setTimeout(() => {
-        navigate('/home'); // Navigate to the homepage after a delay 
+
+        navigate('/home'); // Navigate to the homepage after a delay
       }, 1000); // Adjust the delay time as needed
     }
   }, [showConfirmationMessage, navigate]);
@@ -83,13 +84,14 @@ function Signup(props) {
         <div className={styles.signupError}>
           <p>{error}</p>
         </div>
-      )}
+      )}<<<<<<< feature/add-updates-clientside
       
       {showConfirmationMessage && (
   <div className={`${styles.signupConfirmation} ${styles.blackText}`}>
     <p>Thank you for signing up! Your account has been created.</p>
   </div>
 )}
+
       <button onClick={handleFormSubmit} className={styles.signupBtn}>
         Sign Up
       </button>
