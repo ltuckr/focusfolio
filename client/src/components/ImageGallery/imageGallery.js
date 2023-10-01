@@ -4,12 +4,21 @@ import styles from "./imageGallery.module.css";
 import { ADD_FAVORITE, REMOVE_FAVORITE } from "../../utils/mutations"; // Import the mutations from your file
 import FavoriteButton from "../Favorite/FavoriteButton";
 
+<<<<<<< HEAD
+// Image Imports 
+import NB1Image from "../../images/NB1.JPG";
+import NB2Image from "../../images/NB2.JPG";
+import NB3Image from "../../images/NB3.JPG";
+import NB4Image from "../../images/NB4.JPG";
+import NB5Image from "../../images/NB5.JPG";
+=======
 // Image Imports
 import NB1Image from "../../images/NB1.jpg";
 import NB2Image from "../../images/NB2.jpg";
 import NB3Image from "../../images/NB3.jpg";
 import NB4Image from "../../images/NB4.jpg";
 import NB5Image from "../../images/NB5.jpg";
+>>>>>>> caef96af3fd2460f3ffdbe44d7b32e390f58c8ab
 import NB6Image from "../../images/NB6.jpg";
 
 // Image data
