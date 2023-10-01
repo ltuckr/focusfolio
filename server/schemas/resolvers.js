@@ -5,6 +5,14 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
+
+    images: async () => {
+      return await Image.find({});
+    },
+    user: async (parent, args, {user}) => {
+      return User.findById(user._id).populate('favorites');
+    }
+
   
   },
 
@@ -52,16 +60,18 @@ const resolvers = {
           throw new Error('Image not found');
         }
 
-        // Check if the image is already favorited by the user
-        const isFavorited = user.favorites.some((favId) => favId.equals(imageId));
+        const loggedInUser = await User.findById(user._id);
+
+       //Check if the image is already favorited by the user
+        const isFavorited = loggedInUser.favorites.some((favId) => favId.equals(imageId));
 
         if (isFavorited) {
           throw new Error('Image is already favorited');
         }
 
-        // Add the image to the user's favorites
-        user.favorites.push(imageId);
-        await user.save();
+        // Add the image to the loggedInUser's favorites
+       loggedInUser.favorites.push(imageId);
+        await loggedInUser.save();
 
         return image;
       } catch (error) {
