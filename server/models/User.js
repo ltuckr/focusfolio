@@ -5,9 +5,8 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  purchases: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Purchase' }],
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+
 });
 
 // Hash the password before saving the user

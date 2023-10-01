@@ -1,4 +1,4 @@
-const { User, Project, Image, Comment, ClientGallery } = require("../models");
+const { User, Image, } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 // const stripe = require("stripe")("INSERT KEY HERE");
@@ -39,11 +39,13 @@ const resolvers = {
     },
 
     addFavorite: async (_, { imageId }, { user }) => {
+      // Ensure the user is authenticated
       if (!user) {
         throw new AuthenticationError('You must be logged in to favorite images.');
       }
 
       try {
+        // Find the image by its ID (replace with your logic to identify images)
         const image = await Image.findById(imageId);
 
         if (!image) {
@@ -51,7 +53,7 @@ const resolvers = {
         }
 
         // Check if the image is already favorited by the user
-        const isFavorited = user.favorites.includes(imageId);
+        const isFavorited = user.favorites.some((favId) => favId.equals(imageId));
 
         if (isFavorited) {
           throw new Error('Image is already favorited');
@@ -68,11 +70,13 @@ const resolvers = {
     },
 
     removeFavorite: async (_, { imageId }, { user }) => {
+      // Ensure the user is authenticated
       if (!user) {
         throw new AuthenticationError('You must be logged in to unfavorite images.');
       }
 
       try {
+        // Find the image by its ID (replace with your logic to identify images)
         const image = await Image.findById(imageId);
 
         if (!image) {
@@ -80,21 +84,20 @@ const resolvers = {
         }
 
         // Check if the image is favorited by the user
-        const isFavorited = user.favorites.includes(imageId);
+        const isFavorited = user.favorites.some((favId) => favId.equals(imageId));
 
         if (!isFavorited) {
           throw new Error("Image is not favorited, can't unfavorite");
         }
 
         // Remove the image from the user's favorites
-        user.favorites = user.favorites.filter((favId) => favId.toString() !== imageId.toString());
+        user.favorites = user.favorites.filter((favId) => !favId.equals(imageId));
         await user.save();
 
         return image;
       } catch (error) {
         throw new Error(`Failed to remove favorite: ${error.message}`);
       }
-
     },
 
     // Uncomment and customize the Stripe-related mutations as needed

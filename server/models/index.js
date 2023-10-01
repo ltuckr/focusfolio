@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // Import individual models
 const User = require('./User');
 const Image = require('./Image');
-const Comment = require('./Comment');
+const Favorite = require('./Favorite');
 const Purchase = require('./Purchase');
 
 // Connect to the MongoDB database (if not already connected)
@@ -24,6 +24,5 @@ db.once('open', () => {
 module.exports = {
   User,
   Image,
-  Comment,
   Purchase,
 };

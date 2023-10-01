@@ -12,13 +12,15 @@ const typeDefs = gql`
   type Auth {
     token: ID
     user: User
+    
   }
 
 
   type Image {
     _id: ID!
-    image: String!
-
+    identifier: String! # Add this field to match your updated Image model
+    user: User!
+    favorites: [Favorite!]!
   }
 
   type Favorite {
@@ -53,9 +55,9 @@ const typeDefs = gql`
     
     createUser(username: String!, email: String!, password: String!): Auth
 
-    addFavorite(imageId: ID!): Image
+    addFavorite(imageId: ID!):  Favorite
 
-    removeFavorite(userId: ID!, imageId: ID!): User
+    removeFavorite( imageId: ID!): Favorite
 
     createComment(projectId: ID!, text: String!): Comment
 
