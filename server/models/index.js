@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 // Import individual models
 const User = require('./User');
-const Project = require('./Project');
 const Image = require('./Image');
 const Comment = require('./Comment');
 const Purchase = require('./Purchase');
@@ -24,7 +23,6 @@ db.once('open', () => {
 
 module.exports = {
   User,
-  Project,
   Image,
   Comment,
   Purchase,
