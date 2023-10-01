@@ -12,36 +12,6 @@ export const QUERY_USERS = gql`
   }
 `;
 
-export const QUERY_PROJECTS = gql`
-  query projects {
-    projects {
-      _id
-      title
-      description
-      images {
-        _id
-        imageUrl
-        description
-      }
-      user_id
-      created_at
-      updated_at
-    }
-  }
-`;
-
-export const QUERY_PURCHASES = gql`
-  query purchases {
-    purchases {
-      _id
-      user_id
-      project_id
-      transactionAmount
-      transactionDate
-    }
-  }
-`;
-
 export const QUERY_FAVORITES = gql`
   query favorites {
     favorites {

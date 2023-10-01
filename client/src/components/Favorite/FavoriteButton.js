@@ -2,41 +2,46 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { CREATE_FAVORITE } from "../../utils/mutations";
+import { ADD_FAVORITE, REMOVE_FAVORITE } from "../../utils/mutations"; // Updated import statements
+
 function FavoriteButton({ userId, imageUrl, isFavorited, onToggleFavorite }) {
-    const [createFavorite] = useMutation(CREATE_FAVORITE);
-  
-    const handleFavorite = async () => {
-      try {
-        // Call the GraphQL mutation to create or remove a favorite
-        const response = await createFavorite({
+  const [addFavorite] = useMutation(ADD_FAVORITE);
+  const [removeFavorite] = useMutation(REMOVE_FAVORITE);
+
+  const handleFavorite = async () => {
+    try {
+      if (!isFavorited) {
+        // If not favorited, add the favorite
+        await addFavorite({
           variables: {
-            userId: userId,
-            imageUrl: imageUrl,
+            imageId: imageUrl,
           },
         });
-  
-        // Check the response to determine if the image was favorited or unfavorited
-        const { data } = response;
-        const isCurrentlyFavorited = data?.createFavorite?.isFavorited;
-  
-        // Notify the parent component about the favorite status change
-        onToggleFavorite(isCurrentlyFavorited);
-      } catch (error) {
-        console.error("Error favoriting image:", error);
+      } else {
+        // If already favorited, remove the favorite
+        await removeFavorite({
+          variables: {
+            imageId: imageUrl,
+          },
+        });
       }
-    };
-  
-    return (
-      <button onClick={handleFavorite}>
-        {isFavorited ? (
-          <FontAwesomeIcon icon={faHeart} color="red" />
-        ) : (
-          <FontAwesomeIcon icon={faHeart} color="gray" />
-        )}
-      </button>
-    );
-  }
-  
-  export default FavoriteButton;
-  
+
+      // Notify the parent component about the favorite status change
+      onToggleFavorite(!isFavorited);
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
+  return (
+    <button onClick={handleFavorite}>
+      {isFavorited ? (
+        <FontAwesomeIcon icon={faHeart} color="red" />
+      ) : (
+        <FontAwesomeIcon icon={faHeart} color="gray" />
+      )}
+    </button>
+  );
+}
+
+export default FavoriteButton;

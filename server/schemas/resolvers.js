@@ -9,6 +9,7 @@ const resolvers = {
   },
 
   Mutation: {
+
     createUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
@@ -17,7 +18,7 @@ const resolvers = {
 
     login: async (parent, { email, password }) => {
       try {
-        // Use a case-insensitive search for the email address
+        // Use case-insensitive search for the email address
         const user = await User.findOne({ email: { $regex: new RegExp(email, 'i') } });
     
         if (!user) {
@@ -37,53 +38,67 @@ const resolvers = {
       }
     },
 
-    createProject: async (parent, args) => {
-      const project = await Project.create(args);
-      return project;
-    },
+    addFavorite: async (_, { imageId }, { user }) => {
+      if (!user) {
+        throw new AuthenticationError('You must be logged in to favorite images.');
+      }
 
-    createPurchase: async (parent, args) => {
-      const purchase = await Purchase.create(args);
-      return purchase;
-    },
-
-    createFavorite: async (parent, { imageId }, context) => {
-      if (context.user) {
-        const user = context.user;
-
+      try {
         const image = await Image.findById(imageId);
 
         if (!image) {
           throw new Error('Image not found');
         }
 
-        const existingFavorite = await Favorite.findOne({
-          user: user._id,
-          image: image._id,
-        });
+        // Check if the image is already favorited by the user
+        const isFavorited = user.favorites.includes(imageId);
 
-        if (existingFavorite) {
+        if (isFavorited) {
           throw new Error('Image is already favorited');
         }
 
-        const favorite = new Favorite({
-          user: user._id,
-          image: image._id,
-        });
+        // Add the image to the user's favorites
+        user.favorites.push(imageId);
+        await user.save();
 
-        await favorite.save();
-
-        return favorite;
-      } else {
-        throw new AuthenticationError('Authentication required to favorite an image');
+        return image;
+      } catch (error) {
+        throw new Error(`Failed to add favorite: ${error.message}`);
       }
     },
 
-    createComment: async (parent, args) => {
-      const comment = await Comment.create(args);
-      return comment;
+    removeFavorite: async (_, { imageId }, { user }) => {
+      if (!user) {
+        throw new AuthenticationError('You must be logged in to unfavorite images.');
+      }
+
+      try {
+        const image = await Image.findById(imageId);
+
+        if (!image) {
+          throw new Error('Image not found');
+        }
+
+        // Check if the image is favorited by the user
+        const isFavorited = user.favorites.includes(imageId);
+
+        if (!isFavorited) {
+          throw new Error("Image is not favorited, can't unfavorite");
+        }
+
+        // Remove the image from the user's favorites
+        user.favorites = user.favorites.filter((favId) => favId.toString() !== imageId.toString());
+        await user.save();
+
+        return image;
+      } catch (error) {
+        throw new Error(`Failed to remove favorite: ${error.message}`);
+      }
+
     },
+
     // Uncomment and customize the Stripe-related mutations as needed
+    
     // createProduct: async (parent, { _id }) => {
     //   return await Project.findById(_id).populate('clientGallery');
     // },
