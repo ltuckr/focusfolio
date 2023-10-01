@@ -12,13 +12,15 @@ const typeDefs = gql`
   type Auth {
     token: ID
     user: User
+    
   }
 
 
   type Image {
     _id: ID!
-    image: String!
-
+    identifier: String!
+    user: User!
+    favorites: Boolean 
   }
 
   type Favorite {
@@ -37,28 +39,25 @@ const typeDefs = gql`
   type Comment {
     _id: ID!
     text: String!
-    project: Project!
+    
     user: User!
   }
 
   type Query {
-    projects: [Project]!
-    project(_id: ID!): Project
+    
     users: [User]!
     purchases: [Product]!
     comments: [Comment]!
-    clientGalleryImages: [Project]!  # Add this query
+    
   }
 
   type Mutation {
     
     createUser(username: String!, email: String!, password: String!): Auth
 
-    createPurchase(projectId: ID!): Product  # Updated this line to return a Product
+    addFavorite(imageId: ID!):  Favorite
 
-    addFavorite(imageId: ID!): Image
-
-    removeFavorite(userId: ID!, imageId: ID!): User
+    removeFavorite( imageId: ID!): Favorite
 
     createComment(projectId: ID!, text: String!): Comment
 

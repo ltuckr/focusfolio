@@ -32,7 +32,7 @@ export const ADD_FAVORITE = gql`
   mutation AddFavorite($imageId: ID!) {
     addFavorite(imageId: $imageId) {
       _id
-      imageUrl
+      fileName # Use fileName instead of imageUrl
       favorites {
         _id
         user {
@@ -47,7 +47,7 @@ export const REMOVE_FAVORITE = gql`
   mutation RemoveFavorite($imageId: ID!) {
     removeFavorite(imageId: $imageId) {
       _id
-      imageUrl
+      fileName # Use fileName instead of imageUrl
       favorites {
         _id
         user {
@@ -58,5 +58,4 @@ export const REMOVE_FAVORITE = gql`
   }
 `;
 
-
-
+    
