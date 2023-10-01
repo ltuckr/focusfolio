@@ -5,11 +5,11 @@ import { ADD_FAVORITE, REMOVE_FAVORITE } from "../../utils/mutations"; // Import
 import FavoriteButton from "../Favorite/FavoriteButton";
 
 // Image Imports 
-import NB1Image from "../../images/NB1.jpg";
-import NB2Image from "../../images/NB2.jpg";
-import NB3Image from "../../images/NB3.jpg";
-import NB4Image from "../../images/NB4.jpg";
-import NB5Image from "../../images/NB5.jpg";
+import NB1Image from "../../images/NB1.JPG";
+import NB2Image from "../../images/NB2.JPG";
+import NB3Image from "../../images/NB3.JPG";
+import NB4Image from "../../images/NB4.JPG";
+import NB5Image from "../../images/NB5.JPG";
 
 // Image data
 const images = [
