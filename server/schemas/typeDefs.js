@@ -65,11 +65,11 @@ const typeDefs = gql`
     
     createUser(username: String!, email: String!, password: String!): Auth
 
-    createProject(title: String!, description: String!, images: [String]!): Project
-
     createPurchase(projectId: ID!): Product  # Updated this line to return a Product
 
-    createFavorite(imageId: ID!): Favorite
+    addFavorite(imageId: ID!): Image
+
+    removeFavorite(imageId: ID!): Image
 
     createComment(projectId: ID!, text: String!): Comment
 
