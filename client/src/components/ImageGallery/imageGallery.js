@@ -7,41 +7,38 @@ import FavoriteButton from "../../components/Favorite/FavoriteButton";
 
 const GalleryImgs = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isImageFavorited, setIsImageFavorited] = useState({}); // Use an object to track favorites for each image
+  const [isImageFavorited, setIsImageFavorited] = useState(false);
 
   // Fetch images using the GraphQL query
   const { loading, error, data } = useQuery(QUERY_IMAGES);
 
-  // Define the addFavorite and removeFavorite mutations
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setIsImageFavorited(false);
+  };
+
   const [addFavorite] = useMutation(ADD_FAVORITE);
   const [removeFavorite] = useMutation(REMOVE_FAVORITE);
 
-  // Handle favorite/unfavorite for a specific image
-  const handleFavorite = async (imageId) => {
+  const handleFavorite = async () => {
     try {
-      const isCurrentlyFavorited = isImageFavorited[imageId] || false;
-
-      if (!isCurrentlyFavorited) {
-        // If not favorited, add the favorite
+      if (!isImageFavorited && selectedImage && selectedImage.id) {
+        // If not favorited and selectedImage has an 'id', add the favorite
         await addFavorite({
           variables: {
-            imageId,
+            imageId: selectedImage.id, // Assuming you have an 'id' field in your image data
           },
         });
-      } else {
-        // If already favorited, remove the favorite
+      } else if (selectedImage && selectedImage.id) {
+        // If already favorited and selectedImage has an 'id', remove the favorite
         await removeFavorite({
           variables: {
-            imageId,
+            imageId: selectedImage.id,
           },
         });
       }
 
-      // Toggle the favorite status for the clicked image
-      setIsImageFavorited((prev) => ({
-        ...prev,
-        [imageId]: !isCurrentlyFavorited,
-      }));
+      setIsImageFavorited(!isImageFavorited); // Toggle the favorite status
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
@@ -58,14 +55,14 @@ const GalleryImgs = () => {
             <img
               src={image.imageUrl}
               alt={image.title}
-              onClick={() => handleFavorite(image.id)} // Pass the image id to handleFavorite
+              onClick={() => openModal(image)}
               className={styles.imageItem}
             />
             <FavoriteButton
-                className={styles.favoriteButtonContainer}
-                imageUrl={image.imageUrl}
-                isFavorited={isImageFavorited[image.id] || false}
-                onToggleFavorite={() => handleFavorite(image.id)} 
+              className={styles.favoriteButtonContainer}
+              imageUrl={image.imageUrl}
+              isFavorited={isImageFavorited}
+              onToggleFavorite={handleFavorite}
             />
           </div>
         </div>
@@ -75,5 +72,3 @@ const GalleryImgs = () => {
 };
 
 export default GalleryImgs;
-
-
