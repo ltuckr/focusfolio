@@ -8,7 +8,7 @@ import { QUERY_IMAGES } from "../../utils/queries"; // Import the GraphQL query 
 const GalleryImgs = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isImageFavorited, setIsImageFavorited] = useState(false);
-  const [commentText, setCommentText] = useState("");
+
 
   // Fetch images using the GraphQL query
   const { loading, error, data } = useQuery(QUERY_IMAGES);

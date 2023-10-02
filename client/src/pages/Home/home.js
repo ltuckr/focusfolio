@@ -3,6 +3,8 @@ import img1 from "../../images/p1.jpg";
 import img2 from "../../images/p2.jpg";
 import img3 from "../../images/p3.jpg";
 import img4 from "../../images/p4.jpg";
+import img5 from "../../images/p5.jpg";
+
 
 export default function Home() {
     return (
