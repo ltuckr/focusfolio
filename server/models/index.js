@@ -1,4 +1,3 @@
-// models/index.js
 
 const mongoose = require('mongoose');
 
@@ -6,13 +5,6 @@ const mongoose = require('mongoose');
 const User = require('./User');
 const Image = require('./Image');
 const Favorite = require('./Favorite');
-
-
-// Connect to the MongoDB database
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
 const db = mongoose.connection;
 
