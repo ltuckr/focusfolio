@@ -5,7 +5,7 @@
     "scripts": {
         "start": "cd client && npm start",
         "server": "cd server && npm start",
-        "develop": "concurrently \"cd server && npm run watch\"\"cd client && npm start\"",
+        "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
         "install": "cd server && npm i && cd ../client && npm i",
         "seed": "cd server && npm run seed",
         "heroku-postbuild": "cd client && npm run build"
@@ -15,7 +15,8 @@
         "npm": "6.x"
     },
     "devDependencies": {
-        "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "concurrently": "^5.1.0"
     },
     "dependencies": {
         "mongodb": "^6.1.0"
