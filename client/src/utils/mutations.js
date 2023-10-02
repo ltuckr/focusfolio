@@ -33,10 +33,13 @@ export const ADD_FAVORITE = gql`
 `;
 
 export const REMOVE_FAVORITE = gql`
-  mutation RemoveFavorite($imageId: ID!) {
+  mutation removeFavorite($imageId: ID!) {
     removeFavorite(imageId: $imageId) {
       _id
       imageUrl
+     
     }
   }
+  
 `;
+
