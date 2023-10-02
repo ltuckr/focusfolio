@@ -10,9 +10,6 @@
         "seed": "cd server && npm run seed",
         "heroku-postbuild": "cd client && npm run build"
     },
-    "dependencies": {
-        "react-google-font-loader": "^1.1.0"
-    },
     "engines": {
         "node": "14.x",
         "npm": "6.x"
