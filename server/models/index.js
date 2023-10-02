@@ -6,10 +6,13 @@ const mongoose = require('mongoose');
 const User = require('./User');
 const Image = require('./Image');
 const Favorite = require('./Favorite');
-const Purchase = require('./Purchase');
 
-// Connect to the MongoDB database (if not already connected)
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/focusfolio', {
+
+// MongoDB connection string
+const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/focusfolio';
+
+// Connect to the MongoDB database
+mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -24,5 +27,5 @@ db.once('open', () => {
 module.exports = {
   User,
   Image,
-  Purchase,
+ Favorite
 };
