@@ -1,14 +1,19 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
-const { authMiddleware } = require('./utils/auth'); 
+const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+// Middleware to set the appropriate headers
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 // Initialize Apollo Server with typeDefs and resolvers
 const server = new ApolloServer({
@@ -24,7 +29,7 @@ app.use(express.json());
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-  
+
   // Serve the React frontend
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

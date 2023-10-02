@@ -19,32 +19,6 @@
   display: inline-block;
   }
   
-  
-  .favoriteButtonContainer {
-  position: absolute;
-  bottom: 0; /* Adjust the vertical position of the button */
-  left: 0; /* Adjust the horizontal position of the button */
-  background: transparent;
-  border: none;
-  padding: 20px 20px; /* Adjust padding as needed */
-  cursor: pointer;
-  font-size: 25px;
-  }
-  
-  
-  .favoriteButtonContainer svg {
-  fill: red; /* You can change the color of the heart icon as desired */
-  }
-  
-  
-  .favoriteButtonWrapper {
-  position: absolute;
-  /* bottom: 0;
-  left: 0; */
-  z-index: 2;
-  }
-  
-  
   .imageItem:hover {
   transform: scale(1.1);
   }
