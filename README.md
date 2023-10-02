@@ -50,13 +50,11 @@ To install and run FocusFolio, follow these steps: <br>
 - https://developer.mozilla.org/en-US/
 - https://www.youtube.com/
 - https://stackoverflow.com/
-- https://animate.style/
-- https://codepen.io/electronicshed/pen/QWwjyRd
+- https://www.howtographql.com/react-urql/5-authentication/
+- https://legacy.reactjs.org/docs/getting-started.html
 - https://blog.hubspot.com/website/modal-web-design 
 - https://huemint.com/bootstrap-basic/
-- https://mdbootstrap.com/docs/standard/extended/comments/
-- https://www.sliderrevolution.com/resources/bootstrap-login-form/
-- https://getbootstrap.com/docs/5.3/examples/blog/
+- https://www.mongodb.com/docs/atlas/app-services/graphql/
 
 
 
@@ -74,15 +72,11 @@ To install and run FocusFolio, follow these steps: <br>
 
 [![GitHub](https://img.shields.io/badge/--181717?logo=github&logoColor=ffffff)](https://github.com/)
 [![Visual Studio](https://badgen.net/badge/icon/visualstudio?icon=visualstudio&label)](https://visualstudio.microsoft.com)
-[![JavaScript](https://badgen.net/badge/icon/javascript?icon=javascript&label)](https://www.javascript.com/)
-[![.gitignore](https://badgen.net/badge/icon/git?icon=git&label)](https://git-scm.com/doc)
+[![Mongoose](https://badgen.net/badge/icon/javascript?icon=javascript&label)](https://mongoosejs.com/)
+[![Apollo Server](https://badgen.net/badge/icon/git?icon=git&label)](http://localhost:3001/graphql)
 [![Node.js](https://badgen.net/badge/icon/nodejs?icon=nodejs&label)](https://nodejs.org/)
-[![Sequelize](https://badgen.net/badge/icon/npm?icon=npm&label)](https://sequelize.org/)
-[![Dotenv](https://badgen.net/badge/icon/npm?icon=npm&label)](https://npmjs.com/)
-[![Bootstrap](https://badgen.net/badge/icon/npm?icon=npm&label)](https://getbootstrap.com/)
-[![Handlebars](https://badgen.net/badge/icon/npm?icon=npm&label)](https://handlebarsjs.com/)
-[![Animate.css](https://badgen.net/badge/icon/npm?icon=npm&label)](https://animate.style/)
+[![MongoDB](https://badgen.net/badge/icon/npm?icon=npm&label)](https://www.mongodb.com/)
+[![GraphQL](https://badgen.net/badge/icon/npm?icon=npm&label)](https://graphql.org/)
 [![bcrypt](https://badgen.net/badge/icon/nodejs?icon=nodejs&label)](https://nodejs.org/)
-[![Session](https://badgen.net/badge/icon/nodejs?icon=nodejs&label)](https://nodejs.org/)
-[![eslint](https://badgen.net/badge/icon/nodejs?icon=nodejs&label)](https://eslint.org/)
-[![Prettier](https://badgen.net/badge/icon/nodejs?icon=nodejs&label)](https://prettier.io/)
+[![React](https://badgen.net/badge/icon/nodejs?icon=nodejs&label)](https://legacy.reactjs.org/)
+[![Heroku](https://badgen.net/badge/icon/nodejs?icon=nodejs&label)](https://eslint.org/)
