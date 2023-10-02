@@ -8,9 +8,6 @@ const Image = require('./Image');
 const Favorite = require('./Favorite');
 
 
-// MongoDB connection string
-const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/focusfolio';
-
 // Connect to the MongoDB database
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
