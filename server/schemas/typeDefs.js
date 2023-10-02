@@ -15,13 +15,10 @@ const typeDefs = gql`
     
   }
 
-
   type Image {
     _id: ID!
-    identifier: String!
-    user: User!
-    favorites: Boolean 
-  }
+    imageUrl: String!
+ }
 
   type Favorite {
     _id: ID!
@@ -48,6 +45,8 @@ const typeDefs = gql`
     users: [User]!
     purchases: [Product]!
     comments: [Comment]!
+    images: [Image]!
+    user: User!
     
   }
 
@@ -55,7 +54,7 @@ const typeDefs = gql`
     
     createUser(username: String!, email: String!, password: String!): Auth
 
-    addFavorite(imageId: ID!):  Favorite
+    addFavorite(imageId: ID!):  Image
 
     removeFavorite( imageId: ID!): Favorite
 

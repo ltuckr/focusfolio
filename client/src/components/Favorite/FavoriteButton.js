@@ -1,53 +1,32 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { ADD_FAVORITE, REMOVE_FAVORITE } from "../../utils/mutations"; // Updated import statements
-import styles from "../ImageGallery/imageGallery.module.css";
 
+const FavoriteButton = ({ isFavorited, onToggleFavorite, iconSize }) => {
+  const handleClick = (event) => {
+    // Prevent the click event from propagating to the parent elements (e.g., the image)
+    event.stopPropagation();
+    
+    // Toggle the favorite status by passing the opposite of the current 'isFavorited' value.
+    onToggleFavorite(!isFavorited);
+  };
 
-function FavoriteButton({ userId, imageUrl, isFavorited, onToggleFavorite }) {
-const [addFavorite] = useMutation(ADD_FAVORITE);
-const [removeFavorite] = useMutation(REMOVE_FAVORITE);
+  // Define a style object to customize the icon's size and color
+  const iconStyle = {
+    fontSize: iconSize || "30px", // Default size is 24px
+    color: isFavorited ? "red" : "white", // Change color based on favorited status
+    position: "absolute",
+    bottom: "20px", // Adjust the top position to move the icon higher
+    right: "30px", // Adjust the left position to move the icon to the left
+    zIndex: 1, // Ensure the icon is above the image
+    cursor: "pointer", // Add pointer cursor to indicate clickability
+  };
 
-
-const handleFavorite = async () => {
-try {
-if (!isFavorited) {
-// If not favorited, add the favorite
-await addFavorite({
-variables: {
-imageId: imageUrl,
-},
-});
-} else {
-// If already favorited, remove the favorite
-await removeFavorite({
-variables: {
-imageId: imageUrl,
-},
-});
-}
-
-
-// Notify the parent component about the favorite status change
-onToggleFavorite(!isFavorited);
-} catch (error) {
-console.error("Error toggling favorite:", error);
-}
+  return (
+    <div style={{ position: "relative" }}>
+      <FontAwesomeIcon icon={faHeart} style={iconStyle} onClick={handleClick} />
+    </div>
+  );
 };
-
-
-return (
-<button onClick={handleFavorite} className={styles.favoriteButtonContainer} >
-{isFavorited ? (
-<FontAwesomeIcon icon={faHeart} color="red" />
-) : (
-<FontAwesomeIcon icon={faHeart} color="white" />
-)}
-</button>
-);
-}
-
 
 export default FavoriteButton;

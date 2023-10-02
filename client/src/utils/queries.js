@@ -12,8 +12,19 @@ export const QUERY_USERS = gql`
   }
 `;
 
+export const QUERY_USER = gql`
+query User {
+  user {
+    favorites {
+      _id
+      imageUrl
+    }
+  }
+}
+`;
+
 export const QUERY_FAVORITES = gql`
-  query favorites {
+  query Favorites {
     favorites {
       _id
       user_id
@@ -22,24 +33,12 @@ export const QUERY_FAVORITES = gql`
   }
 `;
 
-export const QUERY_COMMENTS = gql`
-  query comments {
-    comments {
-      _id
-      user_id
-      image_id
-      text
-      created_at
-    }
-  }
-`;
 
 export const QUERY_IMAGES = gql`
-  query images {
-    images {
-      _id
-      imageUrl
-      description
-    }
+query Images {
+  images {
+    _id
+    imageUrl
   }
+}
 `;
