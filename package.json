@@ -5,13 +5,12 @@
     "scripts": {
         "start": "cd client && npm start",
         "server": "cd server && npm start",
-        "dev": "concurrently \"npm run server\" \"npm start --prefix client\"",
-        "heroku-postbuild": "cd client && npm install --only=prod && npm run build",
-        "test": "echo \"No tests available yet\""
+        "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+        "install": "cd server && npm i && cd ../client && npm i",
+        "seed": "cd server && npm run seed",
+        "heroku-postbuild": "cd client && npm run build"
     },
-    "dependencies": {
-        "react-google-font-loader": "^1.1.0"
-    },
+   
     "engines": {
         "node": "14.x",
         "npm": "6.x"
