@@ -84,31 +84,42 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError('You must be logged in to unfavorite images.');
       }
-
+    
       try {
-        // Find the image by its ID (replace with your logic to identify images)
-        const image = await Image.findById(imageId);
-
-        if (!image) {
-          throw new Error('Image not found');
+        // Find the user by ID
+        const populatedUser = await User.findById(user._id);
+    
+        if (!populatedUser) {
+          throw new Error('User not found');
         }
-
+    
+        // Extract the favorites into a separate variable
+        let userFavorites = populatedUser.favorites;
+    
         // Check if the image is favorited by the user
-        const isFavorited = user.favorites.some((favId) => favId.equals(imageId));
-
+        const isFavorited = userFavorites.some((favImage) => favImage.equals(imageId));
+    
         if (!isFavorited) {
           throw new Error("Image is not favorited, can't unfavorite");
         }
-
-        // Remove the image from the user's favorites
-        user.favorites = user.favorites.filter((favId) => !favId.equals(imageId));
-        await user.save();
-
-        return image;
+    
+        // Remove the specified image from the user's favorites using filter
+        userFavorites = userFavorites.filter((favImage) => !favImage.equals(imageId));
+    
+        // Update the user's favorites
+        populatedUser.favorites = userFavorites;
+    
+        // Save the updated user
+        await populatedUser.save();
+    
+        return { id: imageId }; // Return the removed image's ID
       } catch (error) {
+        console.error(`Failed to remove favorite: ${error.message}`);
         throw new Error(`Failed to remove favorite: ${error.message}`);
       }
     },
+    
+    
 
     // Uncomment and customize the Stripe-related mutations as needed
     

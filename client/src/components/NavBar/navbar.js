@@ -37,11 +37,7 @@ export default function NavBar() {
               Contact
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/cart" className={styles.navNames}>
-              Cart
-            </NavLink>
-          </li>
+         
         </ul>
         <ul className={`${styles.navToolsRight} ${isMenuOpen ? styles.open : ''}`}>
           <li>

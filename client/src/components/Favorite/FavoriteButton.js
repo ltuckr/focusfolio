@@ -11,15 +11,17 @@ const FavoriteButton = ({ isFavorited, onToggleFavorite, iconSize }) => {
     onToggleFavorite(!isFavorited);
   };
 
-  // Define a style object to customize the icon's size and color
+  
   const iconStyle = {
-    fontSize: iconSize || "30px", // Default size is 24px
+    fontSize: iconSize || "30px", 
     color: isFavorited ? "red" : "white", // Change color based on favorited status
     position: "absolute",
+
     bottom: "30px", // Adjust the top position to move the icon higher
     left: "30px", // Adjust the left position to move the icon to the left
     zIndex: 1, // Ensure the icon is above the image
     cursor: "pointer", // Add pointer cursor to indicate clickability
+
   };
 
   return (
