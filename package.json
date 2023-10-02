@@ -10,6 +10,7 @@
         "seed": "cd server && npm run seed",
         "heroku-postbuild": "cd client && npm run build"
     },
+   
     "engines": {
         "node": "14.x",
         "npm": "6.x"
