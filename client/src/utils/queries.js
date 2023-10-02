@@ -24,7 +24,7 @@ query User {
 `;
 
 export const QUERY_FAVORITES = gql`
-  query favorites {
+  query Favorites {
     favorites {
       _id
       user_id

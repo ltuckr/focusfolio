@@ -1,40 +1,25 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import styles from "./imageGallery.module.css";
-import { ADD_FAVORITE, REMOVE_FAVORITE } from "../../utils/mutations"; // Import the mutations from your file
+import { ADD_FAVORITE, REMOVE_FAVORITE } from "../../utils/mutations";
 import FavoriteButton from "../Favorite/FavoriteButton";
-
-// Image data
-const images = [
-NB1Image,
-NB2Image,
-NB3Image,
-NB4Image,
-NB5Image,
-NB6Image
-];
-
-
+import { QUERY_IMAGES } from "../../utils/queries"; // Import the GraphQL query for fetching images
 
 const GalleryImgs = () => {
-const [selectedImage, setSelectedImage] = useState(null);
-const [isImageFavorited, setIsImageFavorited] = useState(false);
-const [commentText, setCommentText] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isImageFavorited, setIsImageFavorited] = useState(false);
+  const [commentText, setCommentText] = useState("");
 
+  // Fetch images using the GraphQL query
+  const { loading, error, data } = useQuery(QUERY_IMAGES);
 
   const openModal = (image) => {
     setSelectedImage(image);
     setIsImageFavorited(false);
-   
   };
-
 
   const [addFavorite] = useMutation(ADD_FAVORITE);
   const [removeFavorite] = useMutation(REMOVE_FAVORITE);
-
-const [addFavorite] = useMutation(ADD_FAVORITE);
-const [removeFavorite] = useMutation(REMOVE_FAVORITE);
-
 
   const handleFavorite = async () => {
     try {
@@ -42,14 +27,14 @@ const [removeFavorite] = useMutation(REMOVE_FAVORITE);
         // If not favorited, add the favorite
         await addFavorite({
           variables: {
-            imageId: selectedImage.replace(/\.[^/.]+$/, ""), // Remove file extension from image name
+            imageId: selectedImage.id, // Assuming you have an 'id' field in your image data
           },
         });
       } else {
         // If already favorited, remove the favorite
         await removeFavorite({
           variables: {
-            imageId: selectedImage.replace(/\.[^/.]+$/, ""), // Remove file extension from image name
+            imageId: selectedImage.id,
           },
         });
       }
@@ -60,29 +45,31 @@ const [removeFavorite] = useMutation(REMOVE_FAVORITE);
     }
   };
 
-return (
-<div className={styles.gallery}>
-{images.map((image, index) => (
-<div key={index} className={styles.galleryItem}>
-<div className={styles.imageContainer}>
-<img
-src={image}
-alt={`Image ${index}`}
-onClick={() => openModal(image)}
-className={styles.imageItem}
-/>
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
-
-<FavoriteButton className={styles.favoriteButtonContainer}
-imageUrl={image}
-isFavorited={isImageFavorited}
-onToggleFavorite={handleFavorite}
-/>
-</div>
-</div>
-))}
-</div>
-);
+  return (
+    <div className={styles.gallery}>
+      {data.images.map((image) => (
+        <div key={image.id} className={styles.galleryItem}>
+          <div className={styles.imageContainer}>
+            <img
+              src={image.imageUrl}
+              alt={image.title}
+              onClick={() => openModal(image)}
+              className={styles.imageItem}
+            />
+            <FavoriteButton
+              className={styles.favoriteButtonContainer}
+              imageUrl={image.imageUrl}
+              isFavorited={isImageFavorited}
+              onToggleFavorite={handleFavorite}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default GalleryImgs;

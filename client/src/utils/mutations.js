@@ -1,15 +1,14 @@
 import { gql } from '@apollo/client';
 
-
 export const CREATE_USER = gql`
-mutation createUser($username: String!, $email: String!, $password: String!) {
-  createUser(username: $username, email: $email, password: $password) {
-    token
-    user {
-      _id
+  mutation createUser($username: String!, $email: String!, $password: String!) {
+    createUser(username: $username, email: $email, password: $password) {
+      token
+      user {
+        _id
+      }
     }
   }
-}
 `;
 
 export const LOGIN = gql`
@@ -19,19 +18,18 @@ export const LOGIN = gql`
       user {
         _id
         username
-         
       }
     }
   }
 `;
 
 export const ADD_FAVORITE = gql`
-mutation addFavorite($imageId: ID!) {
-  addFavorite(imageId: $imageId) {
-    _id
-   imageUrl
+  mutation addFavorite($imageId: ID!) {
+    addFavorite(imageId: $imageId) {
+      _id
+      imageUrl
+    }
   }
-}
 `;
 
 export const REMOVE_FAVORITE = gql`
@@ -40,7 +38,5 @@ export const REMOVE_FAVORITE = gql`
       _id
       imageUrl
     }
-   
+  }
 `;
-
-    
