@@ -1,0 +1,34 @@
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 25px;
+  }
+  
+  .footerContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footerText {
+    font-size: 16px;
+    margin: 20px 0;
+  }
+  
+  .footerLinks {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footerLink {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 14px;
+  }
+  
+  .footerLink:hover {
+    text-decoration: underline;
+  }
