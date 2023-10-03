@@ -4,6 +4,8 @@ import img2 from "../../images/p2.jpg";
 import img3 from "../../images/p3.jpg";
 export default function Home() {
   return (
+        //link to carousel https://codepen.io/jh3y/pen/WwVKLN?editors=0100
+
     <div>
       <div className={styles.carousel}>
         <ul className={styles.slides}>
