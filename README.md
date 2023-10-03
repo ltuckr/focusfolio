@@ -63,11 +63,11 @@ To install and run FocusFolio, follow these steps: <br>
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Contact <a name="contact"></a>
-aramirezdev1@gmail.com
-christinalf22@gmail.com
-ian
-lauren
-carson
+- aramirezdev1@gmail.com
+- christinalf22@gmail.com
+- jpomaz12@gmail.com
+- l.tucker.rdh@gmail.com
+- tarheelkid44@yahoo.com
 
 
 ## Deployed Site <a name="deployedsite"></a>
@@ -76,7 +76,12 @@ carson
 
 ## Screenshot of Focusfolio
 
-<img width="1904" alt="focusfolio-sc" src="https://github.com/ltuckr/focusfolio/assets/45980046/feab7a91-aa50-41d5-a37b-20b9a212f945">
+![focusfolio-sc](https://github.com/ltuckr/focusfolio/assets/45980046/b98fca72-35cd-4c00-a2c7-9959a685934f)
+
+![focusfolio-sc1](https://github.com/ltuckr/focusfolio/assets/45980046/f64ccf64-d751-458f-9684-8d4f783062b2)
+
+![focusfolio-sc2](https://github.com/ltuckr/focusfolio/assets/45980046/e89937b0-4010-4a59-99e0-3ac390a8f419)
+
 
 
 ## Repository <a name="repository">https://github.com/ltuckr/focusfolio</a>
